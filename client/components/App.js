@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
-import Video from './video';
+import Combo from './Combo';
+import { Route } from 'react-router-dom';
 
 class App extends Component { 
   render() {
     return(
     <section className="section">
-      <div className="tile is-parent ">
-          <Video />
-          <Video />
+      <div className="hero is-warning">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title is-1">
+                Ponder
+            </h1>
+          </div>
+        </div>
       </div>
-      <div className="control">
-        <textarea className="textarea is-large" placeholder="Large textarea"></textarea>
-      </div>
+      <Route path='/combo' component={Combo} />
     </section>
     )
   }
