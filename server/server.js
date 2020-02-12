@@ -14,9 +14,7 @@ app.use(express.urlencoded({extended: true}));
 // Static middleware
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.get('/api', (req, res) => { 
-  res.send('hello World');
-});
+app.use('/api', require('./routes'));
 
 // 404 
 app.use(function(req, res, next) {

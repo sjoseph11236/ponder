@@ -10,7 +10,7 @@ const Media = db.define('media', {
     type: Sequelize.STRING,
     allowNull: false
   }, 
-  descritption: { 
+  description: { 
     type: Sequelize.TEXT,
     allowNull: false
   }, 
