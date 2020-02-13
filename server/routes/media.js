@@ -1,5 +1,5 @@
 const router  = require('express').Router();
-const { Media } = require('../db');
+const { Media, Tag } = require('../db');
 
 router.get('/', async (req, res, next) => { 
   try {
@@ -11,12 +11,22 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/combo', async (req, res, next) => {
+
+router.get('/combo/:word', async (req, res, next) => {
   try {
-    const filteredMedia = await Media.filterByKeyword('America')
-    console.log("TCL: filteredMedia ", filteredMedia )
-    const length = await Media.selectRandomMedia(filteredMedia);
-    res.json(length)
+    const foundTag = await Tag.findOne({
+      where: {
+        word: req.params.word
+      }
+    });
+
+    const filteredMedia = await Media.filterByKeyword(foundTag.word)
+    
+    if(filteredMedia.length === 1) return res.status(404).send('choose a new keyword');
+    
+    const combo = await Media.makeCombo(filteredMedia);
+    res.send(combo);
+    
   } catch (error) {
     console.log('error from combo GET route in media ', error);
     next(error);

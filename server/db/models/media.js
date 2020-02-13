@@ -43,7 +43,7 @@ Media.filterByKeyword = async (keyword) => {
   }
 };
 
-Media.selectRandomMedia = (filteredMedia) => {
+Media.makeCombo = (filteredMedia) => {
   if(filteredMedia.length === 2 ) return filteredMedia;
   //Get the length
   const filteredMediaLength = filteredMedia.length;
@@ -52,7 +52,7 @@ Media.selectRandomMedia = (filteredMedia) => {
   // Get the randomIdx before it
   const randomIdx2 = Math.abs(randomIdx1 - 1);
 
-  return [filteredMedia[randomIdx1], filteredMedia[randomIdx2], randomIdx1, randomIdx2];
+  return [filteredMedia[randomIdx1], filteredMedia[randomIdx2]];
 }
 
 module.exports = Media;
