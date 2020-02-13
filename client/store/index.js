@@ -3,10 +3,12 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import  mediaReducer from './reducers/media'
+import annotationsReducer from './reducers/annotations';
 
 
 const reducer = combineReducers({
   mediaReducer,
+  annotationsReducer
 });
 
 const middleware = composeWithDevTools(
