@@ -1,7 +1,7 @@
 import React from 'react';
 import Video from './Video';
 import { connect } from 'react-redux';
-import { getMediaThunk } from '../store/reducers/media';
+import { getComboThunk } from '../store/reducers/media';
 
 class Combo extends React.Component{
   constructor(props) {
@@ -9,14 +9,14 @@ class Combo extends React.Component{
   }
 
   componentDidMount() {
-    this.props.getMediaThunk();
+    this.props.getComboThunk('America');
   }
 
   render() {
     return ( 
       <div className='container'>
         <div className="tile is-parent ">
-          {this.props.media.map( medium => {
+          {this.props.combo.map( medium => {
             return <Video key={medium.id} medium={medium} />
           })}
         </div>
@@ -36,13 +36,13 @@ class Combo extends React.Component{
 
 const mapStateToProps = state => {
   return { 
-    media: state.mediaReducer.media
+    combo: state.mediaReducer.combo
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return { 
-    getMediaThunk: () => dispatch(getMediaThunk())
+    getComboThunk: (word) => dispatch(getComboThunk(word))
   }
 }
 
