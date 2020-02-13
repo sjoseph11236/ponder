@@ -22,7 +22,7 @@ class Combo extends React.Component{
         </div>
         <h5 className="title has-text-centered is-5">Next Combo</h5>
         <div className="control">
-          <textarea className="textarea is-large" placeholder="Large textarea"></textarea>
+          <textarea className="textarea is-large" placeholder="Ponder away..."></textarea>
         </div>
         <div className="field is-grouped">
           <div className="control is-rght">

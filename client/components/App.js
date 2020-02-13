@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Combo from './Combo';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 import Feed from './Feed';
 import Nabvbar from './Navbar';
 
@@ -13,9 +13,11 @@ class App extends Component {
       <div className="hero is-warning">
         <div className="hero-body">
           <div className="container">
+          <Link to='/'>
             <h1 className="title has-text-centered is-1">
-                Ponder
+              Ponder
             </h1>
+          </Link>
           </div>
         </div>
       </div>
