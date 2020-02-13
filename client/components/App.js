@@ -7,9 +7,9 @@ class App extends Component {
     return(
     <section className="section">
       <div className="hero is-warning">
-        <div class="hero-body">
-          <div class="container">
-            <h1 class="title is-1">
+        <div className="hero-body">
+          <div className="container">
+            <h1 className="title is-1">
                 Ponder
             </h1>
           </div>
