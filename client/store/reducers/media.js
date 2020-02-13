@@ -20,7 +20,6 @@ export const gotMedia = media => {
 export const getMediaThunk = () => {
   return async dispatch => {
     try {
-      console.log('HERE AT MEID THUNK')
       const { data } = await axios.get('/api/media'); 
       dispatch(gotMedia(data));
     } catch (error) {
