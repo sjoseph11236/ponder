@@ -11,5 +11,17 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get('/combo', async (req, res, next) => {
+  try {
+    const filteredMedia = await Media.filterByKeyword('America')
+    console.log("TCL: filteredMedia ", filteredMedia )
+    const length = await Media.selectRandomMedia(filteredMedia);
+    res.json(length)
+  } catch (error) {
+    console.log('error from combo GET route in media ', error);
+    next(error);
+  }
+});
+
 
 module.exports = router;

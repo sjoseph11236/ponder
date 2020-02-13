@@ -16,6 +16,20 @@ const media = [
     url: "https://www.youtube.com/embed/VYOjWnS4cMY",
     imageUrl: "https://upload.wikimedia.org/wikipedia/en/thumb/6/62/This_Is_America_%28single_cover%29_2018.jpg/220px-This_Is_America_%28single_cover%29_2018.jpg"
   },
+  {
+    title: "Us", 
+    artist: "Jordan Peele", 
+    description: "Accompanied by her husband, son and daughter, Adelaide Wilson returns to the beachfront home where she grew up as a child. Haunted by a traumatic experience from the past, Adelaide grows increasingly concerned that something bad is going to happen. Her worst fears soon become a reality when four masked strangers descend upon the house, forcing the Wilsons into a fight for survival. When the masks come off, the family is horrified to learn that each attacker takes the appearance of one of them.",
+    url: "https://www.youtube.com/embed/vh7_WKODlE8",
+    imageUrl: "http://t2.gstatic.com/images?q=tbn:ANd9GcRsuQJNsOm5Gt-apl6_1KSYupoMvgA9R2kl5ZEKIixEJ_HVQ62d"
+  },
+  {
+    title: "American Psycho", 
+    artist: "Mary Harron", 
+    description: "The movie American Psycho is set in New York City in 1987, a handsome, young urban professional, Patrick Bateman (Christian Bale), lives a second life as a gruesome serial killer by night. The cast is filled by the detective (Willem Dafoe), the fiance (Reese Witherspoon), the mistress (Samantha Mathis), the coworker (Jared Leto), and the secretary (Chloë Sevigny). This is a biting, wry comedy examining the elements that make a man a monster.",
+    url: "https://www.youtube.com/embed/RjKNbfA64EE",
+    imageUrl: "https://www.gstatic.com/tv/thumb/v22vodart/24116/p24116_v_v8_ax.jpg"
+  },
   
 ]
 
