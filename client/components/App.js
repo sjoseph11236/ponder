@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Combo from './Combo';
 import { Route } from 'react-router-dom';
+import Feed from './Feed';
 
 class App extends Component { 
   render() {
@@ -15,7 +16,8 @@ class App extends Component {
           </div>
         </div>
       </div>
-      <Route path='/combo' component={Combo} />
+      <Route exact path='/combo' component={Combo} />
+      <Route exact path='/Feed' component={Feed} />
     </section>
     )
   }

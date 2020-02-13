@@ -1,5 +1,5 @@
 import React from 'react';
-import Video from './video';
+import Video from './Video';
 import { connect } from 'react-redux';
 import { getMediaThunk } from '../store/reducers/media';
 
