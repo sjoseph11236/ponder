@@ -8,7 +8,7 @@ This is my boiler plate:
 - Run `npm install`
 
 ### TO D0:
-[] Create dummy data for Annotations .
+[x] Create dummy data for Annotations .
 [] Create front-end design for showing annotation feed.
 [] Display combo images in section for full of annotation.
 [] Set-up comment boxes. 
