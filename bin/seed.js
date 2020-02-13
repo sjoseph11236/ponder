@@ -1,4 +1,4 @@
-const { db, Media, Tag } = require('../server/db');
+const { db, Media, Tag, Annotation } = require('../server/db');
 const {green, red} = require('chalk')
 
 const media = [
@@ -25,6 +25,24 @@ const tags = [
   {word: 'discrimination'}
 ];
 
+const annotations = [
+  {
+    info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum quas ex architecto officia minus? Praesentium sequi tempore, est commodi veritatis laborum provident illum sapiente veniam minima ex, exercitationem distinctio doloremque?Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem id fugit voluptatem, consequatur error laboriosam in expedita recusandae labore nesciunt omnis tempore aliquam porro dolores ad voluptates assumenda voluptas. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat magnam voluptatum aut nobis nostrum ea pariatur dolorem, ex beatae officiis sit fuga soluta hic fugit repellat tempora cupiditate assumenda debitis.',
+    date: new Date()
+  },
+  {
+    info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum quas ex architecto officia minus? Praesentium sequi tempore, est commodi veritatis laborum provident illum sapiente veniam minima ex, exercitationem distinctio doloremque?Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem id fugit voluptatem, consequatur error laboriosam in expedita recusandae labore nesciunt omnis tempore aliquam porro dolores ad voluptates assumenda voluptas. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat magnam voluptatum aut nobis nostrum ea pariatur dolorem, ex beatae officiis sit fuga soluta hic fugit repellat tempora cupiditate assumenda debitis.',
+    date: new Date()
+  },
+  {
+    info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum quas ex architecto officia minus? Praesentium sequi tempore, est commodi veritatis laborum provident illum sapiente veniam minima ex, exercitationem distinctio doloremque?Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem id fugit voluptatem, consequatur error laboriosam in expedita recusandae labore nesciunt omnis tempore aliquam porro dolores ad voluptates assumenda voluptas. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat magnam voluptatum aut nobis nostrum ea pariatur dolorem, ex beatae officiis sit fuga soluta hic fugit repellat tempora cupiditate assumenda debitis.',
+    date: new Date()
+  },
+  {
+    info: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum quas ex architecto officia minus? Praesentium sequi tempore, est commodi veritatis laborum provident illum sapiente veniam minima ex, exercitationem distinctio doloremque?Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem id fugit voluptatem, consequatur error laboriosam in expedita recusandae labore nesciunt omnis tempore aliquam porro dolores ad voluptates assumenda voluptas. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat magnam voluptatum aut nobis nostrum ea pariatur dolorem, ex beatae officiis sit fuga soluta hic fugit repellat tempora cupiditate assumenda debitis.',
+    date: new Date()
+  }
+]
 
 const seed = async() => {
   await db.sync({force: true});
@@ -36,6 +54,10 @@ const seed = async() => {
   await Promise.all(tags.map(tag => {
     return Tag.create(tag);
   }));
+
+  await Promise.all(annotations.map(annotation =>{ 
+    return Annotation.create(annotation);
+  }))
 
   console.log(green('Seeding success!'));
   db.close();

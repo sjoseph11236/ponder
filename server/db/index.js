@@ -6,8 +6,7 @@ const Tag = require('./models/tag');
 
 // associations go here
 Media.belongsToMany(Media, {as: 'pair', through: 'combo'});
-Annotation.belongsToMany(Media, {through:'combo'});
-
+Annotation.belongsToMany(Media, { through: 'feed'});
 Tag.belongsToMany(Media, {through: 'mediaTag'});
 
 Annotation.hasMany(Comment);
