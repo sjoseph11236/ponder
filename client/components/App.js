@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Combo from './Combo';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Feed from './Feed';
 import Nabvbar from './Navbar';
 
@@ -20,8 +20,10 @@ class App extends Component {
         </div>
       </div>
       {/* routes */}
-      <Route exact path='/' component={Combo} />
-      <Route exact path='/feed' component={Feed} />
+      <Switch>
+        <Route exact path='/' component={Combo} />
+        <Route exact path='/feed' component={Feed} />
+      </Switch>
     </section>
     )
   }

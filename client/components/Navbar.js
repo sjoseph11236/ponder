@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link } from 'react-router-dom';
 
 const Navbar = () => {
   return ( 
@@ -20,8 +21,14 @@ const Navbar = () => {
         
       {/*Right Side  */}
       <div className="level-right">
-        <p className="level-item"><strong>Home</strong></p>
-        <p className="level-item"><a>Feed</a></p>
+        <p className="level-item">
+          <Link to="/">
+            <strong>Home</strong>
+          </Link>
+        </p>
+        <p className="level-item">
+          <Link to="/feed">Feed</Link>
+        </p>
         <p className="level-item"><a className="button is-success">New</a></p>
       </div>
     </nav>
