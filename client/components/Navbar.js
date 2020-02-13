@@ -29,7 +29,6 @@ const Navbar = () => {
         <p className="level-item">
           <Link to="/feed">Feed</Link>
         </p>
-        <p className="level-item"><a className="button is-success">New</a></p>
       </div>
     </nav>
   );

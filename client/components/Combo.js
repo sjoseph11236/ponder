@@ -20,7 +20,7 @@ class Combo extends React.Component{
             return <Video key={medium.id} medium={medium} />
           })}
         </div>
-        <h5 className="title is-5">Next Combo</h5>
+        <h5 className="title has-text-centered is-5">Next Combo</h5>
         <div className="control">
           <textarea className="textarea is-large" placeholder="Large textarea"></textarea>
         </div>
