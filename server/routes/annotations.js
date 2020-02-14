@@ -21,14 +21,18 @@ router.get('/:comboId/feed', async(req, res, next) => {
       }
     });
 
-    const foundAnnotations = []
+    let foundAnnotations = []
     
-    foundComboAnnotations.forEach( async annotation => { 
-      const foundAnnotation = await Annotation.findByPK(annotation.annotationId);
+    // Have to use foor loop instead of forEach possibley because of Async/await
+    for(let i = 0; i < foundComboAnnotations.length; i++) {
+      let annotation = foundComboAnnotations[i];
+      const foundAnnotation = await Annotation.findByPk(annotation.annotationId);
       foundAnnotations.push(foundAnnotation);
-    })
+    }
 
-    res.send(foundAnnotations);
+    if(!foundAnnotations.length) res.status(404).send('No annotations found');
+
+    res.json(foundAnnotations);
   } catch (error) {
     console.error('This error is coming from GET /:comboId/feed ', error);
     next(error);
