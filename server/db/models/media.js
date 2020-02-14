@@ -51,7 +51,7 @@ Media.makeCombo = async (filteredMedia) => {
   const filteredMediaLength = filteredMedia.length;
   // Choose On randomIdx
   const randomIdx1 = Math.floor(Math.random() * filteredMediaLength);
-  // Get the randomIdx before it
+  // Get th idx before it
   const randomIdx2 = Math.abs(randomIdx1 - 1);
 
   const combo = [filteredMedia[randomIdx1], filteredMedia[randomIdx2]];

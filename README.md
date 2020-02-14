@@ -8,11 +8,12 @@ This is my boiler plate:
 - Run `npm install`
 
 ### TO D0:
-[x] Create dummy data for Annotations .
-[] Create front-end design for showing annotation feed.
-[] Display combo images in section for full of annotation.
-[] Set-up comment boxes. 
-[] Create dummy data for comments.
+
+- Create Feed modal with customized column names.
+- Seed associations of combos and annotations
+- Create GET route to get all annotations linked to the found combo
+- Create a POST Route with comboId, annotationId, and ifo and add to Feed modal and add the annotation to the annotation modal. 
+
 
 ### SOURCES:
 [Enzyme set-up](https://www.freecodecamp.org/news/how-to-set-up-jest-enzyme-like-a-boss-8455a2bc6d56/)

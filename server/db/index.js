@@ -4,10 +4,11 @@ const Annotation = require('./models/annotation');
 const Comment = require('./models/comment');
 const Tag = require('./models/tag');
 const Combo = require('./models/combo');
+const Feed = require('./models/feed');
 
 // associations go here
 Media.belongsToMany(Media, {as: 'pair', through: Combo});
-Annotation.belongsToMany(Media, { through: 'feed'});
+Annotation.belongsToMany(Combo, { through: Feed});
 Tag.belongsToMany(Media, {through: 'mediaTag'});
 
 Annotation.hasMany(Comment);
@@ -19,5 +20,6 @@ module.exports = {
   Annotation,
   Comment,
   Combo,
-  Tag
+  Tag, 
+  Feed
 };
