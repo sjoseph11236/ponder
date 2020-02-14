@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 const { Op } = require('sequelize');
+const { Combo } = require('../index');
 
 const Media = db.define('media', { 
   title: { 
@@ -43,7 +44,7 @@ Media.filterByKeyword = async (keyword) => {
   }
 };
 
-Media.makeCombo = (filteredMedia) => {
+Media.makeCombo = async (filteredMedia) => {
   if(filteredMedia.length === 2 ) return filteredMedia;
   //Get the length
   const filteredMediaLength = filteredMedia.length;
@@ -52,7 +53,9 @@ Media.makeCombo = (filteredMedia) => {
   // Get the randomIdx before it
   const randomIdx2 = Math.abs(randomIdx1 - 1);
 
-  return [filteredMedia[randomIdx1], filteredMedia[randomIdx2]];
+  const combo = [filteredMedia[randomIdx1], filteredMedia[randomIdx2]];
+
+  return combo;
 }
 
 module.exports = Media;

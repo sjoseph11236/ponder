@@ -17,7 +17,7 @@ class Combo extends React.Component{
     return ( 
       <div className='container'>
         <div className="tile is-parent ">
-          {this.props.combo.map( medium => {
+          {this.props.combo && this.props.combo.map( medium => {
             return <Video key={medium.id} medium={medium} />
           })}
         </div>
@@ -37,7 +37,7 @@ class Combo extends React.Component{
 
 const mapStateToProps = state => {
   return { 
-    combo: state.mediaReducer.combo
+    combo: state.mediaReducer.combo.combo
   }
 }
 
