@@ -8,7 +8,7 @@ This is my boiler plate:
 - Run `npm install`
 
 ### TO D0:
-b
+
 - Create GET route to get all annotations linked to the found combo
 - Create a POST Route with comboId, annotationId, and ifo and add to Feed modal and add the annotation to the annotation modal. 
 
