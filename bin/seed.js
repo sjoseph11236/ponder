@@ -1,4 +1,4 @@
-const { db, Media, Tag, Annotation } = require('../server/db');
+const { db, Media, Tag, Annotation, Feed, Combo } = require('../server/db');
 const {green, red} = require('chalk')
 
 const media = [
@@ -72,6 +72,21 @@ const seed = async() => {
   await Promise.all(annotations.map(annotation =>{ 
     return Annotation.create(annotation);
   }))
+
+  await Combo.create({
+    mediumId: 1,
+    pairId: 3
+  })
+
+  await Feed.create({
+    comboId: 1, 
+    annotationId: 3, 
+  })
+
+  await Feed.create({
+    comboId: 1, 
+    annotationId: 4, 
+  })
 
   console.log(green('Seeding success!'));
   db.close();
