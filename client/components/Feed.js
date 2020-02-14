@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getAnnotationsThunk } from '../store/reducers/annotations';
+import { getAnnotationsThunk, getComboAnnotationsThunk } from '../store/reducers/annotations';
 import Image from './Image';
 import AnnotationCard from './AnnotationCard';
 import { getMediaThunk } from '../store/reducers/media';
@@ -11,10 +11,8 @@ class Feed extends Component {
   }
 
   componentDidMount() {
-    this.props.getAnnotationsThunk();
-    this.props.getMediaThunk();
+    this.props.getComboAnnotationsThunk(1);
   }
-  
   render() { 
     return (  
       <div className="section"> 
@@ -23,11 +21,11 @@ class Feed extends Component {
           <div className="tile is-ancestor">
             <div className="tile is-vertical is-8">
               <div className="tile">
-                {this.props.combo && this.props.combo.map(medium => {
+                {this.props.combo.combo && this.props.combo.combo.map(medium => {
                   return <Image key={medium.id} medium={medium} /> 
                 })}
               </div>
-            {this.props.annotations.map(annotation => {
+            {this.props.annotations && this.props.annotations.map(annotation => {
               return <AnnotationCard key={annotation.id} annotation={annotation} />
             })}
             </div>
@@ -49,13 +47,14 @@ class Feed extends Component {
 const mapStateToProps = state => {
   return { 
     annotations : state.annotationsReducer.annotations,
-    combo: state.mediaReducer.combo.combo
+    combo: state.mediaReducer.combo
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return { 
     getAnnotationsThunk: () => dispatch(getAnnotationsThunk()),
+    getComboAnnotationsThunk: comboId => dispatch(getComboAnnotationsThunk(comboId)),
     getMediaThunk: ()=> dispatch(getMediaThunk())
   }
 }

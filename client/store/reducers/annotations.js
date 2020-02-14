@@ -1,4 +1,5 @@
-import Axios from "axios";
+import axios from "axios";
+import { gotCombo } from "./media";
 
 // ACTION TYPES
 const GOT_ANNOTATIONS = 'GOT_ANNOTATIONS';
@@ -15,10 +16,21 @@ export const gotAnnotations = annotations => {
 export const getAnnotationsThunk = () => {
   return async dispatch => {
     try {
-      const { data } = await Axios.get('/api/annotations');
+      const { data } = await axios.get('/api/annotations');
       dispatch(gotAnnotations(data));
     } catch (error) {
       console.log('This error is comming from getAnnotationsThunk ', error);
+    }
+  }
+}
+
+export const getComboAnnotationsThunk = comboId => {
+  return async dispatch => { 
+    try {
+      const { data } = await axios.get(`/api/annotations/${comboId}/feed`);
+      dispatch(gotAnnotations(data));
+    } catch (error) {
+      console.error('This error is at getComboAnnotationsThunk ', error);
     }
   }
 }
