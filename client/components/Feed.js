@@ -23,7 +23,7 @@ class Feed extends Component {
           <div className="tile is-ancestor">
             <div className="tile is-vertical is-8">
               <div className="tile">
-                {this.props.media.map(medium => {
+                {this.props.combo && this.props.combo.map(medium => {
                   return <Image key={medium.id} medium={medium} /> 
                 })}
               </div>
@@ -49,7 +49,7 @@ class Feed extends Component {
 const mapStateToProps = state => {
   return { 
     annotations : state.annotationsReducer.annotations,
-    media: state.mediaReducer.media,
+    combo: state.mediaReducer.combo.combo
   }
 }
 

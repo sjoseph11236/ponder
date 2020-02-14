@@ -32,7 +32,8 @@ Media.filterByKeyword = async (keyword) => {
     const filteredByKeywordInDescription = await Media.findAll({
       where: { 
         description: {
-          [Op.like]: `%${keyword}%`
+          // Op.iLike makes the keyword case insentive
+          [Op.iLike]: `%${keyword}%`
         }
       }
     })

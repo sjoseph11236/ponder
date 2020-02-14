@@ -56,7 +56,7 @@ export const getMediaThunk = () => {
 export const getComboThunk = word => { 
   return async dispatch => {
     try {
-      const { data } = await axios.get(`/api/media/combo/${word}`);
+      const { data } = await axios.post(`/api/media/combo/${word}`);
       dispatch(gotCombo(data));
     } catch (error) {
       dispatch(gotError(error.message));

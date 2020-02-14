@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
 });
 
 
-router.get('/combo/:word', async (req, res, next) => {
+router.post('/combo/:word', async (req, res, next) => {
   try {
     const filteredMedia = await Media.filterByKeyword(req.params.word)
     
@@ -30,7 +30,7 @@ router.get('/combo/:word', async (req, res, next) => {
 
     // TO DO: Create a class method in Tag to create a tag ro find a tag for a storedCombo
     // set the tag to each media in mediaTag model
-
+  
     const finalCombo = { 
       id: storedCombo[0].id,
       combo
