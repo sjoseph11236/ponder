@@ -33,5 +33,13 @@ router.get('/combo/:word', async (req, res, next) => {
   }
 });
 
+// router.get('/combo/random', async (req, res, next) => {
+//   try {
+    
+//   } catch (error) {
+//     console.log('error from /combo/random  GET route in media ', error);
+//     next(error);
+//   }
+// });
 
 module.exports = router;

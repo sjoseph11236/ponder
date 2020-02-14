@@ -9,7 +9,8 @@ class Combo extends React.Component{
   }
 
   componentDidMount() {
-    this.props.getComboThunk('America');
+    // this.props.getComboThunk('America');
+    // ADD METHOD: getRandomComboThunk();
   }
 
   render() {
