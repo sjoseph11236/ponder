@@ -1,5 +1,5 @@
 const router  = require('express').Router();
-const { Media, Tag, Combo } = require('../db');
+const { Media, Combo } = require('../db');
 
 router.get('/', async (req, res, next) => { 
   try {
@@ -14,15 +14,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/combo/:word', async (req, res, next) => {
   try {
-    const foundTag = await Tag.findOne({
-      where: {
-        word: req.params.word
-      }
-    });
-
-
-    
-    const filteredMedia = await Media.filterByKeyword(foundTag.word)
+    const filteredMedia = await Media.filterByKeyword(req.params.word)
     
     if(filteredMedia.length === 1) return res.status(404).send('choose a new keyword');
     
@@ -35,6 +27,9 @@ router.get('/combo/:word', async (req, res, next) => {
         pairId: combo[1].id
       }
     });
+
+    // TO DO: Create a class method in Tag to create a tag ro find a tag for a storedCombo
+    // set the tag to each media in mediaTag model
 
     const finalCombo = { 
       id: storedCombo[0].id,
