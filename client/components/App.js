@@ -34,7 +34,7 @@ class App extends Component {
   render() {
     return(
     <section className="section">
-      <Nabvbar handleChange={this.handleChange} handleSubmit={this.handleSubmit} word={this.state.word} />
+      <Nabvbar handleChange={this.handleChange} handleSubmit={this.handleSubmit} word={this.state.word} error={this.props.error} />
       <div className="hero is-warning">
         <div className="hero-body">
           <div className="container">
@@ -55,10 +55,14 @@ class App extends Component {
     )
   }
 }
-
+const mapStateToProps = state => {
+  return { 
+    error: state.mediaReducer.error
+  }
+}
 const mapDispatchToProps = dispatch => { 
   return { 
     getComboThunk: (word)=> dispatch(getComboThunk(word))
   }
 }
-export default connect( null, mapDispatchToProps )(App);
+export default connect(mapStateToProps, mapDispatchToProps )(App);

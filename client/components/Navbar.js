@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link } from 'react-router-dom';
 
-const Navbar = ({ handleChange, handleSubmit, word }) => {
+const Navbar = ({ handleChange, handleSubmit, word, error }) => {
   return ( 
     <nav className="level">
       <div className="level-left">
@@ -17,8 +17,8 @@ const Navbar = ({ handleChange, handleSubmit, word }) => {
             </p>
           </div>
         </div>
+        <p>{error ? <strong>try different word </strong> : '' }</p>
       </div>
-        
       {/*Right Side  */}
       <div className="level-right">
         <p className="level-item">
