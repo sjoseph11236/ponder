@@ -27,6 +27,8 @@ export const getAnnotationsThunk = () => {
 export const getComboAnnotationsThunk = comboId => {
   return async dispatch => { 
     try {
+      console.log('HERE')
+      console.log('comboId ', comboId);
       const { data } = await axios.get(`/api/annotations/${comboId}/feed`);
       dispatch(gotAnnotations(data));
     } catch (error) {

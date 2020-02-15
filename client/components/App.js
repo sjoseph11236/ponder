@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Combo from './Combo';
 import { connect } from 'react-redux';
-import { postComboThunk } from '../store/reducers/media';
+import { postComboThunk, getComboThunk } from '../store/reducers/media';
 import { Route, Switch, Link } from 'react-router-dom';
 import Feed from './Feed';
 import Nabvbar from './Navbar';
@@ -36,15 +36,17 @@ class App extends Component {
 
   handleAnnotationSubmit(e) { 
     e.preventDefault();
-    const { combo, postComboAnnotationThunk } = this.props
+    const { combo, postComboAnnotationThunk } = this.props;
     postComboAnnotationThunk(combo.id, this.state.text);
     this.setState({
       text: ''
     })
   }
 
-  componentDidMount() {
-    // this.props.getComboAnnotationsThunk(1);
+  async componentDidMount() {
+   await this.props.getComboThunk();
+    console.log('id mount ', this.props.combo.id);
+    await this.props.getComboAnnotationsThunk(this.props.combo.id);
   }
   
   render() {
@@ -80,6 +82,7 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => { 
   return { 
+    getComboThunk: () => dispatch(getComboThunk()),
     postComboThunk: word => dispatch(postComboThunk(word)),
     postComboAnnotationThunk: ( comboId, text ) => dispatch(postComboAnnotationThunk( comboId, text)),
     getComboAnnotationsThunk: comboId => dispatch(getComboAnnotationsThunk(comboId))
