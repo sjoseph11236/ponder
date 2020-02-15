@@ -14,10 +14,13 @@ class App extends Component {
     this.state = { 
       word: '', 
       text: '',
+      information: {},
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.selectInformation = this.selectInformation.bind(this);
     this.handleAnnotationSubmit = this.handleAnnotationSubmit.bind(this);
+    
   }
 
   handleChange(event) {
@@ -30,7 +33,8 @@ class App extends Component {
     e.preventDefault();
     this.props.postComboThunk(this.state.word);
     this.setState({
-      word: ''
+      word: '',
+      information: {}
     })
   }
 
@@ -41,6 +45,12 @@ class App extends Component {
     this.setState({
       text: ''
     })
+  }
+
+  selectInformation(information) {
+    return this.setState({
+      information: information
+    });
   }
 
   async componentDidMount() {
@@ -66,8 +76,8 @@ class App extends Component {
       </div>
       {/* routes */}
       <Switch>
-        <Route exact path='/' render={()=> <Combo text={text} handleChange={this.handleChange} handleAnnotationSubmit={this.handleAnnotationSubmit}  /> } />
-        <Route exact path='/feed' component={Feed} />
+        <Route exact path='/' render={() => <Combo text={text} handleChange={this.handleChange} handleAnnotationSubmit={this.handleAnnotationSubmit}  /> } />
+        <Route exact path='/feed' render={() => <Feed information={this.state.information} selectInformation={this.selectInformation} />} />
       </Switch>
     </section>
     )

@@ -4,13 +4,19 @@ import { getAnnotationsThunk, getComboAnnotationsThunk } from '../store/reducers
 import Image from './Image';
 import AnnotationCard from './AnnotationCard';
 import { getMediaThunk } from '../store/reducers/media';
+import FullView from './FullView';
+
 class Feed extends Component {
   constructor(props) {
     super(props);
-    this.state = {  }
+    this.state = { 
+    }
   }
 
+
+
   render() { 
+    const { information, selectInformation } = this.props;
     return (  
       <div className="section"> 
         <div className="container">
@@ -19,20 +25,15 @@ class Feed extends Component {
             <div className="tile is-vertical is-8">
               <div className="tile">
                 {this.props.combo.combo && this.props.combo.combo.map(medium => {
-                  return <Image key={medium.id} medium={medium} /> 
+                  return <Image key={medium.id} medium={medium}  selectInformation={selectInformation }/> 
                 })}
               </div>
             {this.props.annotations && this.props.annotations.map(annotation => {
-              return <AnnotationCard key={annotation.id} annotation={annotation} />
+              return <AnnotationCard key={annotation.id} annotation={annotation} selectInformation={selectInformation}/>
             })}
             </div>
             <div className="tile is-parent">
-              <article className="tile is-child notification is-success">
-                <div className="content">
-                  <p className="title">{this.props.annotations.length ? `Annotation #${this.props.annotations[0].id}`  : '' }</p>
-                  <div className="content">{this.props.annotations.length ? this.props.annotations[0].info  : 'Feed is empty' }</div>
-                </div>
-              </article>
+              { information.id || information.title ? <FullView information={information} /> : null } 
             </div>
           </div>
         </div>
