@@ -13,7 +13,5 @@ const Annotation = db.define('annotation', {
   }
 });
 
-Annotation.findComboAnnotations = () => {
-  console.log('here');
-}
+
 module.exports = Annotation;

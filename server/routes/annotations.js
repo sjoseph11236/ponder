@@ -14,25 +14,13 @@ router.get('/', async(req, res, next) => {
 // GET /api/annotations/:comboId/feed
 router.get('/:comboId/feed', async(req, res, next) => {
   try {
-    const comboId = req.params.comboId
-    const foundComboAnnotations = await Feed.findAll({
-      where : { 
-        comboId
-      }
-    });
-
-    let foundAnnotations = []
+    const comboId = req.params.comboId;
     
-    // Have to use foor loop instead of forEach possibley because of Async/await
-    for(let i = 0; i < foundComboAnnotations.length; i++) {
-      let annotation = foundComboAnnotations[i];
-      const foundAnnotation = await Annotation.findByPk(annotation.annotationId);
-      foundAnnotations.push(foundAnnotation);
-    }
+    const foundAnnotations = await Feed.findComboAnnotations(comboId);
 
     if(!foundAnnotations.length) res.status(404).send('No annotations found');
 
-    res.json(foundAnnotations);
+    res.send(foundAnnotations);
   } catch (error) {
     console.error('This error is coming from GET /:comboId/feed ', error);
     next(error);
@@ -41,22 +29,22 @@ router.get('/:comboId/feed', async(req, res, next) => {
 });
 
 // POST /api/annotations/:comboId
-router.post('/:comboId', async (req, res, next ) => {
+router.post('/:comboId/feed', async (req, res, next ) => {
   try {
     const info = req.body.text;
+    const comboId = req.params.comboId;
     const storedAnnoation =  await Annotation.create({
       info
     });
 
     const storedFeed = await Feed.create({
       annotationId: storedAnnoation.id,
-      comboId: req.params.comboId
+      comboId,
     })
+  
+    const foundAnnotations = await Feed.findComboAnnotations(comboId);    
 
-    Annotation.findComboAnnotations();
-
-    
-
+    res.send(foundAnnotations);
   } catch (error) {
     console.error('This error is coming from POST /:comboId ', error );
     next(error);   
