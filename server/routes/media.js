@@ -14,13 +14,16 @@ router.get('/', async (req, res, next) => {
 // GET /api/media/combo
 router.get('/combo', async (req, res, next ) => {
   try {
-    // A built method to find the count instances on a model. 
+    // A built in method to find the total count of combo model. 
     const { count } = await Combo.findAndCountAll();
     const combo = await Combo.findByPk(count);
     const comboMedia = await Combo.getComboMedia(combo);
-  
-    res.send(combo);
-
+    const finalComboMedia = {
+      id: combo.id, 
+      combo: comboMedia
+    }
+    
+    res.send(finalComboMedia);
   } catch (error) {
     console.log('error from GET route in /media ', error);
     next(error)

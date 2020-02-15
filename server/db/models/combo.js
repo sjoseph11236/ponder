@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
-const { Media } = require('../index');
+const Media  = require('../models/media');
 
 const Combo = db.define('combo', {
   id: { 
@@ -19,7 +19,15 @@ const Combo = db.define('combo', {
 });
 
 Combo.getComboMedia = async combo => {
-
+  try {
+    const gotMedia = await Media.findByPk(combo.mediumId);
+    const gotPair = await Media.findByPk(combo.pairId);
+    const media = [gotMedia, gotPair];
+    
+    return media;
+  } catch (error) {
+    console.log('error from combo model getComboMedia ', error);
+  }
 }
 
 module.exports = Combo; 
