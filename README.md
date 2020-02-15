@@ -8,8 +8,7 @@ This is my boiler plate:
 - Run `npm install`
 
 ### TO D0:
-- Create thunk to fetch the annotations associated with a comboId..
-- Create Action Creator to Add the annotations. 
+
 - Create a POST Route with comboId, annotationId, and ifo and add to Feed modal and add the annotation to the annotation modal. 
 
 
