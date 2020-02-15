@@ -32,7 +32,7 @@ class Feed extends Component {
             <div className="tile is-parent">
               <article className="tile is-child notification is-success">
                 <div className="content">
-                  <p className="title">Annotation #1</p>
+                  <p className="title">{this.props.annotations.length ? `Annotation #${this.props.annotations[0].id}`  : '' }</p>
                   <div className="content">{this.props.annotations.length ? this.props.annotations[0].info  : '' }</div>
                 </div>
               </article>
