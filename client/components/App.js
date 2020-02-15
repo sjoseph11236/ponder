@@ -11,10 +11,13 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = { 
-      word: ''
+      word: '', 
+      text: '',
+
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAnnotationSubmit = this.handleAnnotationSubmit.bind(this);
   }
 
   handleChange(event) {
@@ -30,8 +33,14 @@ class App extends Component {
       word: ''
     })
   }
+
+  handleAnnotationSubmit(e) { 
+    e.preventDefault();
+    console.log('clicked', this.state.text)
+  }
   
   render() {
+    const { text } = this.state;
     return(
     <section className="section">
       <Nabvbar handleChange={this.handleChange} handleSubmit={this.handleSubmit} word={this.state.word} error={this.props.error} />
@@ -48,7 +57,7 @@ class App extends Component {
       </div>
       {/* routes */}
       <Switch>
-        <Route exact path='/' component={Combo} />
+        <Route exact path='/' render={()=> <Combo text={text} handleChange={this.handleChange} handleAnnotationSubmit={this.handleAnnotationSubmit}  /> } />
         <Route exact path='/feed' component={Feed} />
       </Switch>
     </section>

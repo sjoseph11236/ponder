@@ -11,7 +11,7 @@ const Navbar = ({ handleChange, handleSubmit, word, error }) => {
               <input className="input" name='word' type="text" placeholder="Create a new combo" onChange={handleChange} value={word}/>
             </p>
             <p className="control">
-              <button className="button" onClick={(e)=> handleSubmit(e)}>
+              <button className="button" onClick={(e)=> handleSubmit(e)} disabled={ word ? false : true }>
                 Search
               </button>
             </p>
