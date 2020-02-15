@@ -40,5 +40,28 @@ router.get('/:comboId/feed', async(req, res, next) => {
 
 });
 
+// POST /api/annotations/:comboId
+router.post('/:comboId', async (req, res, next ) => {
+  try {
+    const info = req.body.text;
+    const storedAnnoation =  await Annotation.create({
+      info
+    });
+
+    const storedFeed = await Feed.create({
+      annotationId: storedAnnoation.id,
+      comboId: req.params.comboId
+    })
+
+    Annotation.findComboAnnotations();
+
+    
+
+  } catch (error) {
+    console.error('This error is coming from POST /:comboId ', error );
+    next(error);   
+  }
+});
+
 
 module.exports = router;

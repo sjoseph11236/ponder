@@ -35,6 +35,12 @@ export const getComboAnnotationsThunk = comboId => {
   }
 }
 
+export const postComboAnnotationThunk = (comboId, text)  => {
+  return async dispatch => {
+    const { data } = await axios.post(`/api/annotations/${comboId}`, { text });
+    console.log("TCL: postComboAnnotationThunk -> data ", data );
+  }
+}
 const intialState = { 
   annotations: []
 }

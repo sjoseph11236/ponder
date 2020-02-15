@@ -5,6 +5,7 @@ import { getComboThunk } from '../store/reducers/media';
 import { Route, Switch, Link } from 'react-router-dom';
 import Feed from './Feed';
 import Nabvbar from './Navbar';
+import { postComboAnnotationThunk } from '../store/reducers/annotations';
 
 
 class App extends Component { 
@@ -13,7 +14,6 @@ class App extends Component {
     this.state = { 
       word: '', 
       text: '',
-
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,7 +36,11 @@ class App extends Component {
 
   handleAnnotationSubmit(e) { 
     e.preventDefault();
-    console.log('clicked', this.state.text)
+    const { combo, postComboAnnotationThunk } = this.props
+    postComboAnnotationThunk(combo.id, this.state.text);
+    this.setState({
+      text: ''
+    })
   }
   
   render() {
@@ -66,12 +70,14 @@ class App extends Component {
 }
 const mapStateToProps = state => {
   return { 
-    error: state.mediaReducer.error
+    error: state.mediaReducer.error,
+    combo: state.mediaReducer.combo
   }
 }
 const mapDispatchToProps = dispatch => { 
   return { 
-    getComboThunk: (word)=> dispatch(getComboThunk(word))
+    getComboThunk: (word)=> dispatch(getComboThunk(word)),
+    postComboAnnotationThunk: ( comboId, text ) => dispatch(postComboAnnotationThunk( comboId, text)),
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps )(App);

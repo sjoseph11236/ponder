@@ -6,7 +6,14 @@ const Annotation = db.define('annotation', {
     type: Sequelize.TEXT,
     allowNull: false
   },
-  date: Sequelize.DATE
+  date: {
+    type: Sequelize.DATE,
+    allowNull: false,
+    defaultValue: new Date()
+  }
 });
 
+Annotation.findComboAnnotations = () => {
+  console.log('here');
+}
 module.exports = Annotation;

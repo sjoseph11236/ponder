@@ -14,6 +14,7 @@ class Combo extends React.Component{
 
   render() {
     const { text, handleChange, handleAnnotationSubmit } = this.props;
+    
     return ( 
       <div className='container'>
         <div className="tile is-parent ">
@@ -23,7 +24,7 @@ class Combo extends React.Component{
         </div>
         <h5 className="title has-text-centered is-5">Next Combo</h5>
         <div className="control">
-          <textarea className="textarea is-large" placeholder="Ponder away..." name='text' type='text' onChange={handleChange}></textarea>
+          <textarea className="textarea is-large" placeholder="Ponder away..." name='text' type='text' value={text}onChange={handleChange}></textarea>
         </div>
         <div className="field is-grouped">
           <div className="control is-rght">
