@@ -10,6 +10,8 @@ This is my boiler plate:
 ### TO D0:
 
 - Create a POST Route with comboId, annotationId, and ifo and add to Feed modal and add the annotation to the annotation modal. 
+- Add functionality to change side view feed to clicked annotation. 
+- Add validations to models 
 
 
 ### SOURCES:
