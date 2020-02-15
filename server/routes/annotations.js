@@ -28,7 +28,7 @@ router.get('/:comboId/feed', async(req, res, next) => {
 
 });
 
-// POST /api/annotations/:comboId
+// POST /api/annotations/:comboId/feed
 router.post('/:comboId/feed', async (req, res, next ) => {
   try {
     const info = req.body.text;
