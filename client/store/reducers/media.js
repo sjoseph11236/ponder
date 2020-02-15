@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { clearAnnotations } from '../reducers/annotations';
 
 const initialState = {
   media: [],
@@ -77,6 +78,7 @@ export const postComboThunk = word => {
     try {
       const { data } = await axios.post(`/api/media/combo/${word}`);
       dispatch(postedCombo(data));
+      dispatch(clearAnnotations());
     } catch (error) {
       dispatch(gotError(error.message));
       setTimeout(()=> {

@@ -22,7 +22,6 @@ router.get('/combo', async (req, res, next ) => {
       id: combo.id, 
       combo: comboMedia
     }
-    
     res.send(finalComboMedia);
   } catch (error) {
     console.log('error from GET route in /media ', error);

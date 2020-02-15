@@ -1,8 +1,8 @@
 import axios from "axios";
-import { gotCombo } from "./media";
 
 // ACTION TYPES
 const GOT_ANNOTATIONS = 'GOT_ANNOTATIONS';
+const CLEAR_ANNOTATIONS = 'CLEAR_ANNOTATIONS';
 
 // ACTION CREATORS 
 export const gotAnnotations = annotations => {
@@ -11,6 +11,13 @@ export const gotAnnotations = annotations => {
     annotations
   };
 };
+
+export const clearAnnotations = () => {
+  return {
+    type: CLEAR_ANNOTATIONS,
+    clear: []
+  }
+}
 
 // THUNKS 
 export const getAnnotationsThunk = () => {
@@ -27,8 +34,6 @@ export const getAnnotationsThunk = () => {
 export const getComboAnnotationsThunk = comboId => {
   return async dispatch => { 
     try {
-      console.log('HERE')
-      console.log('comboId ', comboId);
       const { data } = await axios.get(`/api/annotations/${comboId}/feed`);
       dispatch(gotAnnotations(data));
     } catch (error) {
@@ -57,6 +62,8 @@ const annotationsReducer = (state = intialState, action) => {
   switch(action.type) {
     case GOT_ANNOTATIONS: 
       return { ...state, annotations: action.annotations };
+    case CLEAR_ANNOTATIONS: 
+      return { ...state, annotations: action.clear };
     default:
       return state; 
   }

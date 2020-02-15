@@ -44,8 +44,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
-   await this.props.getComboThunk();
-    console.log('id mount ', this.props.combo.id);
+    await this.props.getComboThunk();
     await this.props.getComboAnnotationsThunk(this.props.combo.id);
   }
   
