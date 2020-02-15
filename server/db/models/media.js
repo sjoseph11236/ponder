@@ -41,11 +41,11 @@ Media.filterByKeyword = async (keyword) => {
     return filteredByKeywordInDescription;
 
   } catch (error) {
-    console.log('This error is coming from class method in filterByKeyword ', error )
+    console.log('This error is coming from class method in filterByKeyword ', error );
   }
 };
 
-Media.makeCombo = async (filteredMedia) => {
+Media.makeCombo = filteredMedia => {
   if(filteredMedia.length === 2 ) return filteredMedia;
   //Get the length
   const filteredMediaLength = filteredMedia.length;

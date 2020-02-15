@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
+const { Media } = require('../index');
 
 const Combo = db.define('combo', {
   id: { 
@@ -16,5 +17,9 @@ const Combo = db.define('combo', {
     allowNull: false
   }
 });
+
+Combo.getComboMedia = async combo => {
+
+}
 
 module.exports = Combo; 

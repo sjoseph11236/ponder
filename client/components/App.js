@@ -44,7 +44,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.getComboAnnotationsThunk(1);
+    // this.props.getComboAnnotationsThunk(1);
   }
   
   render() {
