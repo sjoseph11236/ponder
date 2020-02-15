@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Combo from './Combo';
 import { connect } from 'react-redux';
-import { getComboThunk } from '../store/reducers/media';
+import { postComboThunk } from '../store/reducers/media';
 import { Route, Switch, Link } from 'react-router-dom';
 import Feed from './Feed';
 import Nabvbar from './Navbar';
-import { postComboAnnotationThunk } from '../store/reducers/annotations';
+import { postComboAnnotationThunk, getComboAnnotationsThunk } from '../store/reducers/annotations';
 
 
 class App extends Component { 
@@ -28,7 +28,7 @@ class App extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.getComboThunk(this.state.word);
+    this.props.postComboThunk(this.state.word);
     this.setState({
       word: ''
     })
@@ -41,6 +41,10 @@ class App extends Component {
     this.setState({
       text: ''
     })
+  }
+
+  componentDidMount() {
+    this.props.getComboAnnotationsThunk(1);
   }
   
   render() {
@@ -76,8 +80,9 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => { 
   return { 
-    getComboThunk: (word)=> dispatch(getComboThunk(word)),
+    postComboThunk: word => dispatch(postComboThunk(word)),
     postComboAnnotationThunk: ( comboId, text ) => dispatch(postComboAnnotationThunk( comboId, text)),
+    getComboAnnotationsThunk: comboId => dispatch(getComboAnnotationsThunk(comboId))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps )(App);

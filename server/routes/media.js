@@ -11,7 +11,18 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+// GET /api/media/:comboId
+router.get('/:comboId', async (req, res, next ) => {
+  try {
+    const comboId = req.params.comboId;
+    res.send(req.params.comboId);
+  } catch (error) {
+    console.log('error from GET route in /media ', error);
+    next(error)
+  }
+});
 
+// POST /api/media/combo/:word
 router.post('/combo/:word', async (req, res, next) => {
   try {
     const filteredMedia = await Media.filterByKeyword(req.params.word)

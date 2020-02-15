@@ -8,7 +8,7 @@ const initialState = {
 
 // ACTION TYPES
 const GOT_MEDIA = 'GOT_MEDIA';
-const GOT_COMBO = 'GOT_COMBO';
+const POSTED_COMBO = 'POSTED_COMBO';
 const GOT_ERROR = 'GOT_ERROR'
 const CLEAR_ERROR = 'CLEAR_ERROR';
 
@@ -20,9 +20,9 @@ export const gotMedia = media => {
   }
 }
 
-export const gotCombo = combo => { 
+export const postedCombo = combo => { 
   return { 
-    type: GOT_COMBO,
+    type: POSTED_COMBO,
     combo
   }
 }
@@ -53,11 +53,11 @@ export const getMediaThunk = () => {
   }
 }
 
-export const getComboThunk = word => { 
+export const postComboThunk = word => { 
   return async dispatch => {
     try {
       const { data } = await axios.post(`/api/media/combo/${word}`);
-      dispatch(gotCombo(data));
+      dispatch(postedCombo(data));
     } catch (error) {
       dispatch(gotError(error.message));
       setTimeout(()=> {
@@ -77,7 +77,7 @@ const mediaReducer = (state = initialState, action) => {
       return { ...state, error: action.clear};
     case GOT_MEDIA: 
       return { ...state, media: action.media };
-    case GOT_COMBO: 
+    case POSTED_COMBO: 
       return { ...state, combo: action.combo };
     default:
       return state;

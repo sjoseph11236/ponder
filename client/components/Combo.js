@@ -1,7 +1,7 @@
 import React from 'react';
 import Video from './Video';
 import { connect } from 'react-redux';
-import { getComboThunk } from '../store/reducers/media';
+import { postComboThunk } from '../store/reducers/media';
 
 class Combo extends React.Component{
   constructor(props) {
@@ -44,7 +44,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return { 
-    getComboThunk: (word) => dispatch(getComboThunk(word))
+    postComboThunk: word => dispatch(postComboThunk(word))
   }
 }
 

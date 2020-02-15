@@ -10,9 +10,6 @@ class Feed extends Component {
     this.state = {  }
   }
 
-  componentDidMount() {
-    // this.props.getComboAnnotationsThunk(1);
-  }
   render() { 
     return (  
       <div className="section"> 
@@ -33,7 +30,7 @@ class Feed extends Component {
               <article className="tile is-child notification is-success">
                 <div className="content">
                   <p className="title">{this.props.annotations.length ? `Annotation #${this.props.annotations[0].id}`  : '' }</p>
-                  <div className="content">{this.props.annotations.length ? this.props.annotations[0].info  : '' }</div>
+                  <div className="content">{this.props.annotations.length ? this.props.annotations[0].info  : 'Feed is empty' }</div>
                 </div>
               </article>
             </div>
