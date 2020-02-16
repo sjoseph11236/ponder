@@ -1,6 +1,7 @@
 const router  = require('express').Router();
 const { Media, Combo } = require('../db');
 
+// GET /api/media
 router.get('/', async (req, res, next) => { 
   try {
     const media = await Media.findAll();
@@ -24,10 +25,31 @@ router.get('/combo', async (req, res, next ) => {
     }
     res.send(finalComboMedia);
   } catch (error) {
-    console.log('error from GET route in /media ', error);
+    console.log('error from GET route in /media/combo ', error);
     next(error)
   }
 });
+
+// GET /api/media/:comboId/next
+router.get('/:comboId/next', async (req, res, next ) => {
+  try {
+    const currentComboId = req.params.comboId;
+    let nextCombo = currentComboId  - 1; 
+    if(nextCombo < 1) nextCombo = 1;
+  
+    const combo = await Combo.findByPk(nextCombo);
+    const comboMedia = await Combo.getComboMedia(combo);
+    const finalCombo = { 
+      id: combo.id,
+      combo: comboMedia
+    }
+    
+    res.send(finalCombo);
+  } catch (error) {
+    console.log('error from GET route in /media/combo/next ', error);
+    next(error)
+  }
+})
 
 // POST /api/media/combo/:word
 router.post('/combo/:word', async (req, res, next) => {

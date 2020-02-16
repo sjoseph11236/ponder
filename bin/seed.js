@@ -75,6 +75,15 @@ const seed = async() => {
 
   await Combo.create({
     mediumId: 1,
+    pairId: 2
+  })
+  await Combo.create({
+    mediumId: 3,
+    pairId: 2
+  })
+
+  await Combo.create({
+    mediumId: 1,
     pairId: 3
   })
 
@@ -87,6 +96,8 @@ const seed = async() => {
     comboId: 1, 
     annotationId: 4, 
   })
+
+
 
   console.log(green('Seeding success!'));
   db.close();

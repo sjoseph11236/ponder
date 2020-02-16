@@ -2,7 +2,7 @@ import React from 'react'
 
 const FullView = ({ information }) => {
   return ( 
-    <article className="tile is-child notification is-success">
+    <article className="tile is-child notification ">
     <div className="content">
       <p className="title">{information.id ? `Annotation #${information.id}` : null}</p>
       <div className="content">{information.info ? information.info : null }</div>
