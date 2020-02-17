@@ -46,8 +46,12 @@ router.post('/:comboId/feed', async (req, res, next ) => {
     })
   
     const foundAnnotations = await Feed.findComboAnnotations(comboId);    
-
-    res.send(foundAnnotations);
+    if(!foundAnnotations.length) {
+      res.status(404).send('No annotations found');
+    }
+    else {
+      res.send(foundAnnotations);
+    }
   } catch (error) {
     console.error('This error is coming from POST /:comboId ', error );
     next(error);   
