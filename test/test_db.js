@@ -12,7 +12,10 @@ const db = new Sequelize('postgres://localhost:5432/ponder_tdd_db', {
 const Media = db.define('media', { 
   title: { 
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: { 
+      notEmpty: true
+    }
   }, 
 });
 
@@ -38,9 +41,6 @@ const syncAndSeed = async () => {
       medium4    
     }
   }
-
-
-
 };
 
 module.exports = { 

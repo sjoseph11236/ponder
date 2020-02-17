@@ -6,23 +6,38 @@ const { Combo } = require('../index');
 const Media = db.define('media', { 
   title: { 
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: { 
+      notEmpty: true
+    }
   }, 
   artist: { 
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: { 
+      notEmpty: true
+    }
   }, 
   description: { 
     type: Sequelize.TEXT,
-    allowNull: false
+    allowNull: false,
+    validate: { 
+      notEmpty: true
+    }
   }, 
   url:{ 
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: { 
+      notEmpty: true
+    }
   },
   imageUrl:{ 
     type: Sequelize.STRING,
     allowNull: false,
+    validate: { 
+      notEmpty: true
+    },
     defaultValue: 'https://amerikicklanghorne.com/wp-content/uploads/2017/04/default-image.jpg'
   }
 });

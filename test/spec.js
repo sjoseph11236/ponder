@@ -4,7 +4,9 @@ const { red } = require('chalk')
 
 describe('Ponder TDD ', () => {
   describe('Data Layer', () => { 
+    
     let seed; 
+
     beforeEach( async () => seed = await db.syncAndSeed().catch(err => {
       console.error(red('Oh noes! Something went wrong!'));
       console.error(err);
