@@ -19,7 +19,7 @@ class Feed extends Component {
   }
 
   render() { 
-    const { information, selectInformation } = this.props;
+    const { information, selectInformation, handleNextCombo} = this.props;
     return (  
       <div className="section"> 
         <div className="container">
@@ -31,6 +31,11 @@ class Feed extends Component {
                   return <Image key={medium.id} medium={medium}  selectInformation={selectInformation }/> 
                 })}
               </div>
+              <h5 className="title has-text-centered is-5" onClick={ e => handleNextCombo(e)}>
+                <u>
+                    Next Combo
+                </u>
+              </h5>
             {this.props.annotations && this.props.annotations.map(annotation => {
               return <AnnotationCard key={annotation.id} annotation={annotation} selectInformation={selectInformation}/>
             })}

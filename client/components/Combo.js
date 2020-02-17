@@ -6,19 +6,10 @@ import { postComboThunk, getNextComboThunk } from '../store/reducers/media';
 class Combo extends React.Component{
   constructor(props) {
     super(props)
-    this.handleNextCombo = this.handleNextCombo.bind(this);
   }
-
-  handleNextCombo(e) {
-    e.preventDefault();
-    const { combo, getNextComboThunk, selectInformation} = this.props;
-    getNextComboThunk(combo.id);
-    selectInformation({});
-  }
-
 
   render() {
-    const { text, handleChange, handleAnnotationSubmit } = this.props;
+    const { text, handleChange, handleAnnotationSubmit, handleNextCombo } = this.props;
     
     return ( 
       <div className='container'>
@@ -27,7 +18,7 @@ class Combo extends React.Component{
             return <Video key={medium.id} medium={medium} />
           })}
         </div>
-        <h5 className="title has-text-centered is-5" onClick={ e => this.handleNextCombo(e)}>
+        <h5 className="title has-text-centered is-5" onClick={ e => handleNextCombo(e)}>
           <u>
               Next Combo
           </u>

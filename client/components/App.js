@@ -20,7 +20,7 @@ class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.selectInformation = this.selectInformation.bind(this);
     this.handleAnnotationSubmit = this.handleAnnotationSubmit.bind(this);
-    
+    this.handleNextCombo = this.handleNextCombo.bind(this);
   }
 
   handleChange(event) {
@@ -53,6 +53,13 @@ class App extends Component {
     });
   }
 
+  handleNextCombo(e) {
+    e.preventDefault();
+    const { combo, getNextComboThunk } = this.props;
+    getNextComboThunk(combo.id);
+    this.selectInformation({});
+  }
+
   async componentDidMount() {
     await this.props.getComboThunk();
     await this.props.getComboAnnotationsThunk(this.props.combo.id);
@@ -76,8 +83,16 @@ class App extends Component {
       </div>
       {/* routes */}
       <Switch>
-        <Route exact path='/' render={() => <Combo text={text} handleChange={this.handleChange} handleAnnotationSubmit={this.handleAnnotationSubmit} selectInformation={this.selectInformation} /> } />
-        <Route exact path='/feed' render={() => <Feed information={this.state.information} selectInformation={this.selectInformation} />} />
+        <Route exact path='/' render={() => <Combo 
+          text={text} 
+          handleChange={this.handleChange} 
+          handleAnnotationSubmit={this.handleAnnotationSubmit} 
+          selectInformation={this.selectInformation} 
+          handleNextCombo={this.handleNextCombo}  /> } />
+        <Route exact path='/feed' render={() => <Feed 
+          information={this.state.information} 
+          selectInformation={this.selectInformation} 
+          handleNextCombo={this.handleNextCombo} />} />
       </Switch>
     </section>
     )
