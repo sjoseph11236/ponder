@@ -76,7 +76,7 @@ class App extends Component {
       </div>
       {/* routes */}
       <Switch>
-        <Route exact path='/' render={() => <Combo text={text} handleChange={this.handleChange} handleAnnotationSubmit={this.handleAnnotationSubmit}  /> } />
+        <Route exact path='/' render={() => <Combo text={text} handleChange={this.handleChange} handleAnnotationSubmit={this.handleAnnotationSubmit} selectInformation={this.selectInformation} /> } />
         <Route exact path='/feed' render={() => <Feed information={this.state.information} selectInformation={this.selectInformation} />} />
       </Switch>
     </section>

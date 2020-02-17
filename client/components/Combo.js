@@ -6,8 +6,15 @@ import { postComboThunk, getNextComboThunk } from '../store/reducers/media';
 class Combo extends React.Component{
   constructor(props) {
     super(props)
+    this.handleNextCombo = this.handleNextCombo.bind(this);
   }
 
+  handleNextCombo(e) {
+    e.preventDefault();
+    const { combo, getNextComboThunk, selectInformation} = this.props;
+    getNextComboThunk(combo.id);
+    selectInformation({});
+  }
 
 
   render() {
@@ -16,11 +23,11 @@ class Combo extends React.Component{
     return ( 
       <div className='container'>
         <div className="tile is-parent ">
-          {this.props.combo && this.props.combo.map( medium => {
+          {this.props.combo.combo && this.props.combo.combo.map( medium => {
             return <Video key={medium.id} medium={medium} />
           })}
         </div>
-        <h5 className="title has-text-centered is-5">
+        <h5 className="title has-text-centered is-5" onClick={ e => this.handleNextCombo(e)}>
           <u>
               Next Combo
           </u>
@@ -40,7 +47,7 @@ class Combo extends React.Component{
 
 const mapStateToProps = state => {
   return { 
-    combo: state.mediaReducer.combo.combo
+    combo: state.mediaReducer.combo
   }
 }
 

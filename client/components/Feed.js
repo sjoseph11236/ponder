@@ -13,7 +13,10 @@ class Feed extends Component {
     }
   }
 
-
+  async componentDidMount() {
+    const { combo, getComboAnnotationsThunk } = this.props;
+    await getComboAnnotationsThunk(combo.id);
+  }
 
   render() { 
     const { information, selectInformation } = this.props;
