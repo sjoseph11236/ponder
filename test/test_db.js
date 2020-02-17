@@ -17,13 +17,28 @@ const Media = db.define('media', {
       notEmpty: true
     }
   }, 
+  artist: { 
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: { 
+      notEmpty: true
+    }
+  }, 
 });
 
 const media = [
-  {title: "Coming to America"},
-  {title: "American Psycho"},
-  {title: "This is America"},
-  {title: "Us"},
+  { title: "Coming to America",
+    artist: "John Landis", 
+  },
+  { title: "American Psycho",
+    artist: "Mary Harron",
+  },
+  { title: "This is America",
+    artist: "Donald Glover", 
+  },
+  { title: "Us",
+    artist: "Jordan Peele", 
+  },
 ]
 
 const syncAndSeed = async () => {
@@ -31,8 +46,7 @@ const syncAndSeed = async () => {
 
   const [ medium1, medium2, medium3, medium4 ]  = await Promise.all(media.map(medium => Media.create(medium)));
 
-  console.log(green('Seeding success!'));
-  db.close();
+
   return {
     media: {
       medium1,
@@ -41,6 +55,9 @@ const syncAndSeed = async () => {
       medium4    
     }
   }
+
+  console.log(green('Seeding success!'));
+  db.close();
 };
 
 module.exports = { 
