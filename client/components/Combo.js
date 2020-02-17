@@ -1,16 +1,14 @@
 import React from 'react';
 import Video from './Video';
 import { connect } from 'react-redux';
-import { postComboThunk } from '../store/reducers/media';
+import { postComboThunk, getNextComboThunk } from '../store/reducers/media';
 
 class Combo extends React.Component{
   constructor(props) {
     super(props)
   }
 
-  componentDidMount() {
-    // ADD METHOD: getRandomComboThunk();
-  }
+
 
   render() {
     const { text, handleChange, handleAnnotationSubmit } = this.props;
@@ -48,7 +46,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return { 
-    postComboThunk: word => dispatch(postComboThunk(word))
+    postComboThunk: word => dispatch(postComboThunk(word)),
+    getNextComboThunk: currComboId => dispatch(getNextComboThunk(currComboId))
   }
 }
 

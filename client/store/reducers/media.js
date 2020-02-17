@@ -89,6 +89,17 @@ export const postComboThunk = word => {
   }
 }
 
+export const getNextComboThunk = currComboId => { 
+  return async dispatch => {
+    try {
+      const { data } = await axios.get(`api/media/${currComboId}/next`);
+      dispatch(gotCombo(data));
+    } catch (error) {
+      console.error('This error is at getNextComboThunk ', error);
+    }
+  }
+}
+
 // MEDIA REDUCER
 const mediaReducer = (state = initialState, action) => { 
   switch(action.type) {

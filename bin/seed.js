@@ -77,6 +77,7 @@ const seed = async() => {
     mediumId: 1,
     pairId: 2
   })
+  
   await Combo.create({
     mediumId: 3,
     pairId: 2
