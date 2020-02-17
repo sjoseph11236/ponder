@@ -18,9 +18,12 @@ router.get('/:comboId/feed', async(req, res, next) => {
     
     const foundAnnotations = await Feed.findComboAnnotations(comboId);
 
-    if(!foundAnnotations.length) res.status(404).send('No annotations found');
-
-    res.send(foundAnnotations);
+    if(!foundAnnotations.length) {
+      res.status(404).send('No annotations found');
+    }
+    else { 
+      res.send(foundAnnotations);
+    }
   } catch (error) {
     console.error('This error is coming from GET /:comboId/feed ', error);
     next(error);

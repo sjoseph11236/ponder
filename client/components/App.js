@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Combo from './Combo';
 import { connect } from 'react-redux';
-import { postComboThunk, getComboThunk } from '../store/reducers/media';
+import { postComboThunk, getComboThunk, getNextComboThunk } from '../store/reducers/media';
 import { Route, Switch, Link } from 'react-router-dom';
 import Feed from './Feed';
 import Nabvbar from './Navbar';
@@ -55,9 +55,12 @@ class App extends Component {
 
   handleNextCombo(e) {
     e.preventDefault();
-    const { combo, getNextComboThunk } = this.props;
+    const { combo, getNextComboThunk, getComboAnnotationsThunk } = this.props;
     getNextComboThunk(combo.id);
     this.selectInformation({});
+    let id = combo.id - 1; 
+    if(!id) id = 1; 
+    getComboAnnotationsThunk(id);
   }
 
   async componentDidMount() {
@@ -109,7 +112,8 @@ const mapDispatchToProps = dispatch => {
     getComboThunk: () => dispatch(getComboThunk()),
     postComboThunk: word => dispatch(postComboThunk(word)),
     postComboAnnotationThunk: ( comboId, text ) => dispatch(postComboAnnotationThunk( comboId, text)),
-    getComboAnnotationsThunk: comboId => dispatch(getComboAnnotationsThunk(comboId))
+    getComboAnnotationsThunk: comboId => dispatch(getComboAnnotationsThunk(comboId)),
+    getNextComboThunk: currComboId => dispatch(getNextComboThunk(currComboId))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps )(App);
