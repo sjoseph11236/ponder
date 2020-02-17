@@ -30,7 +30,6 @@ const media = [
     url: "https://www.youtube.com/embed/RjKNbfA64EE",
     imageUrl: "https://www.gstatic.com/tv/thumb/v22vodart/24116/p24116_v_v8_ax.jpg"
   },
-  
 ]
 
 const tags = [
