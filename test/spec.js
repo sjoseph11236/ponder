@@ -28,15 +28,15 @@ describe('Ponder TDD ', () => {
         expect(seed.media.medium4.artist).to.equal('Mary Harron');
       });
 
-      describe('filterByKeyword', () => {
-        it('returns array with media with the keyword ', async ()=> {
-          const filtered  = await Media.filterByKeyword('america');
-          expect(filtered.length).to.equal(3);
-        });
-      })
-      
+
     });
 
+    describe('filterByKeyword', () => {
+      it('returns array with media with the keyword ', async ()=> {
+        const filtered  = await Media.filterByKeyword('america');
+        expect(filtered.length).to.equal(3);
+      });
+    })
     
   });
 });
