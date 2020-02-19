@@ -32,7 +32,12 @@ describe('Ponder TDD ', () => {
     });
 
     describe('filterByKeyword', () => {
-      it('returns array with media with the keyword ', async ()=> {
+      it('returns an array', async () => { 
+        const result = await Media.filterByKeyword('america');
+        expect(Array.isArray(result)).to.equal(true);
+      });
+        
+      it('returns array with media that match the keyword ', async ()=> {
         const filtered  = await Media.filterByKeyword('america');
         expect(filtered.length).to.equal(3);
       });
