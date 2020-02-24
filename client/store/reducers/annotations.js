@@ -53,12 +53,12 @@ export const postComboAnnotationThunk = (comboId, text)  => {
 
   }
 }
-const intialState = { 
+const initialState = { 
   annotations: []
 }
 
 // REDUCER
-const annotationsReducer = (state = intialState, action) => {
+const annotationsReducer = (state = initialState, action) => {
   switch(action.type) {
     case GOT_ANNOTATIONS: 
       return { ...state, annotations: action.annotations };
