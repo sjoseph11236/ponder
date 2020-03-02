@@ -15,17 +15,9 @@
     "seed": "node ./bin/seed.js",
     "test": "mocha test/spec.js --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sjoseph11236/my-boiler-plate.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sjoseph11236/my-boiler-plate/issues"
-  },
-  "homepage": "https://github.com/sjoseph11236/my-boiler-plate#readme",
   "dependencies": {
     "axios": "^0.19.2",
     "chalk": "^3.0.0",
