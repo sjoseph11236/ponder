@@ -4,7 +4,8 @@ module.exports = {
   // Add react entry file
   entry: './client/index.js',
   // Output deals with where the complied code goes. It add it into a bundle file located in the dist folder.
-  mode: 'development',
+  mode: process.env.NODE_ENV === 'development' ? 'development' : 'production',
+  devtool: 'source-map',
   output: {
     path: path.join(__dirname, '/public'),
     filename: 'bundle.js'
