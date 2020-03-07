@@ -1,12 +1,7 @@
 const { db, Media, Tag, Annotation, Feed, Combo } = require('../server/db');
 const {green, red} = require('chalk')
 const media  = require('./data/media.json');
-
-const tags = [
-  {word: 'America'},
-  {word: 'violence'},
-  {word: 'discrimination'}
-];
+const tags = require('./data/tags.json');
 
 const annotations = [
   {
