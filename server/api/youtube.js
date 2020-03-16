@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const axios = require('axios');
-const { Media, Tag } = require('../db');
+const { Media, Tag, MediaTag } = require('../db');
 const API = process.env.API_TOKEN || require('../../secret');
 
 // Max Results: 
@@ -19,17 +19,27 @@ router.get('/movies/:word', async (req, res, next) => {
     const { data } = await axios.get(URL);
 
     if(data.items.length) { 
-  
-      const tag = await Tag.create({word: req.params.word});
+      // Create Tag in Database
+      const [ tag ]= await Tag.findOrCreate({
+        where: {
+          word: req.params.word
+        }
+      });
 
+      // Format the youtube Data
       const formatedData = Media.formatYoutubeData(data.items, 'movie');
   
+      // Store the formated Data with associated Tag
       await Promise.all(formatedData.map(async music => {
         const storedMusic = await Media.create(music);
-        // const storedMediaTag = await
-        // return Media.create(music);
+        // Associate each media with tag. 
+        await MediaTag.create({ 
+          mediumId: storedMusic.id, 
+          tagId: tag.id
+        })
         return storedMusic;
       }));
+
     res.json(formatedData);
     }
     else { 

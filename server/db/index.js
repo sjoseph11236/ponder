@@ -18,6 +18,7 @@ Comment.belongsTo(Annotation);
 module.exports = { 
   db,
   Media,
+  MediaTag,
   Annotation,
   Comment,
   Combo,
