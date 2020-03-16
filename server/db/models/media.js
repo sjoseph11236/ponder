@@ -13,10 +13,7 @@ const Media = db.define('media', {
   }, 
   artist: { 
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: { 
-      notEmpty: true
-    }
+    allowNull: true,
   }, 
   description: { 
     type: Sequelize.TEXT,
@@ -46,9 +43,20 @@ const Media = db.define('media', {
   }
 });
 
-Media.formatYoutubeData = (data) => { 
+Media.formatYoutubeData = (data, type) => { 
   try {
-    console.log('data is ', data);
+    const formatedData = data.map(datum => {
+      return { 
+        title: datum.snippet.title,
+        artist: datum.snippet.artist || null,
+        type,
+        description: datum.snippet.description,
+        url: `https://www.youtube.com/embed/${datum.id.videoId}`,
+        imageUrl: datum.snippet.thumbnails.default.url
+      }
+    })
+
+    return formatedData;
   } catch (error) {
     console.log('This error is coming from class method in formatYoutubeData', error );
   }

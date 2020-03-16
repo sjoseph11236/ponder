@@ -17,8 +17,8 @@ router.get('/movies/:q', async (req, res, next) => {
     const q = req.params.q;
     const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelID}&maxResults=${max}&q=${q}&type=video&videoEmbeddable=true&key=${API}`;
     const { data } = await axios.get(URL);
-    const formatedData = Media.formatYoutubeData(data);
-    res.json(data);
+    const formatedData = Media.formatYoutubeData(data.items, 'movie');
+    res.json(formatedData);
   } catch (error) {
     console.error(error);
     next(error);
@@ -32,7 +32,8 @@ router.get('/music/:q', async (req, res, next) => {
     const q = req.params.q;
     const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelID}&maxResults=${max}&q=${q}&type=video&videoEmbeddable=true&key=${API}`;
     const { data } = await axios.get(URL);
-    res.json(data);
+    const formatedData = Media.formatYoutubeData(data.items, 'music');
+    res.json(formatedData);
   } catch (error) {
     console.error(error);
     next(error);
