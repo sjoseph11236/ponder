@@ -30,4 +30,18 @@ Combo.getComboMedia = async combo => {
   }
 }
 
+Combo.makeCombo = filteredMedia => {
+  if(filteredMedia.length === 2 ) return filteredMedia;
+  //Get the length
+  const filteredMediaLength = filteredMedia.length;
+  // Choose On randomIdx
+  const randomIdx1 = Math.floor(Math.random() * filteredMediaLength);
+  // Get th idx before it
+  const randomIdx2 = Math.abs(randomIdx1 - 1);
+
+  const combo = [filteredMedia[randomIdx1], filteredMedia[randomIdx2]];
+
+  return combo;
+}
+
 module.exports = Combo; 

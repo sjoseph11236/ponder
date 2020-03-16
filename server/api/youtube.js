@@ -16,6 +16,7 @@ router.get('/movies/:q', async (req, res, next) => {
     const q = req.params.q;
     const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelID}&maxResults=${max}&q=${q}&type=video&videoEmbeddable=true&key=${API}`;
     const { data } = await axios.get(URL);
+    
     res.json(data);
   } catch (error) {
     console.error(error);

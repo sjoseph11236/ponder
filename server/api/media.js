@@ -58,7 +58,7 @@ router.post('/combo/:word', async (req, res, next) => {
     
     if(filteredMedia.length === 1) return res.status(404).send('choose a new keyword');
     
-    const combo = await Media.makeCombo(filteredMedia);
+    const combo = await Combo.makeCombo(filteredMedia);
     
     const storedCombo =  await Combo.findOrCreate({
       where: {
