@@ -11,10 +11,15 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+app.use('/api', require('./api'));
+
 // Static middleware
 app.use(express.static(path.join(__dirname, '../public')));
 
-app.use('/api', require('./api'));
+// sends index.html
+app.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+})
 
 // 404 
 app.use(function(req, res, next) {
