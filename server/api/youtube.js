@@ -8,6 +8,7 @@ const max = 50;
 // Need this link + videoId
 // https://www.youtube.com/embed/
 
+// /api/youtube/movies/:q
 router.get('/movies/:q', async (req, res, next) => { 
   try {
     // Movie Clip Channel ID: 
@@ -22,7 +23,7 @@ router.get('/movies/:q', async (req, res, next) => {
   }
 });
 
-
+// /api/youtube/music/:q
 router.get('/music/:q', async (req, res, next) => { 
   try {
     const channelID = 'UC2pmfLm7iq6Ov1UwYrWYkZA';

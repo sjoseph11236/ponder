@@ -60,7 +60,6 @@ router.post('/combo/:word', async (req, res, next) => {
     
     const combo = await Media.makeCombo(filteredMedia);
     
-
     const storedCombo =  await Combo.findOrCreate({
       where: {
         mediumId: combo[0].id,
