@@ -46,6 +46,14 @@ const Media = db.define('media', {
   }
 });
 
+Media.formatYoutubeData = (data) => { 
+  try {
+    console.log('data is ', data);
+  } catch (error) {
+    console.log('This error is coming from class method in formatYoutubeData', error );
+  }
+}
+
 Media.filterByKeyword = async (keyword) => {
   try {
     const filteredByKeywordInDescription = await Media.findAll({

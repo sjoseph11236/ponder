@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const axios = require('axios');
+const { Media } = require('../db');
 const API = process.env.API_TOKEN || require('../../secret');
 
 // Max Results: 
@@ -16,7 +17,7 @@ router.get('/movies/:q', async (req, res, next) => {
     const q = req.params.q;
     const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelID}&maxResults=${max}&q=${q}&type=video&videoEmbeddable=true&key=${API}`;
     const { data } = await axios.get(URL);
-    
+    const formatedData = Media.formatYoutubeData(data);
     res.json(data);
   } catch (error) {
     console.error(error);
