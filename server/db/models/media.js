@@ -13,7 +13,6 @@ const Media = db.define('media', {
   }, 
   artist: { 
     type: Sequelize.STRING,
-    allowNull: true,
   }, 
   description: { 
     type: Sequelize.TEXT,

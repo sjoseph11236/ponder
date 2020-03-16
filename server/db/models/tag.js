@@ -4,7 +4,10 @@ const db = require('../db');
 const Tag = db.define('tag', { 
   word: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: { 
+      notEmpty: true
+    }
   }
 });
 
