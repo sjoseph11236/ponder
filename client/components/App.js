@@ -73,7 +73,7 @@ class App extends Component {
     return(
     <section className="section">
       <Nabvbar handleChange={this.handleChange} handleSubmit={this.handleSubmit} word={this.state.word} error={this.props.error} />
-      <div className="hero is-warning">
+      <div className="hero is-primary is-bold">
         <div className="hero-body">
           <div className="container">
           <Link to='/'>

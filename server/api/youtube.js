@@ -30,17 +30,31 @@ router.get('/movies/:word', async (req, res, next) => {
       const formatedData = Media.formatYoutubeData(data.items, 'movie');
   
       // Store the formated Data with associated Tag
-      await Promise.all(formatedData.map(async music => {
-        const storedMusic = await Media.create(music);
+      await Promise.all(formatedData.map(async movie => {
+        const [ storedMovie ] = await Media.findOrCreate({
+          where: { 
+            title: movie.title,
+            artist: movie.artist,
+            description: movie.description,
+            url: movie.url, 
+            imageUrl: movie.imageUrl,
+            type: movie.type
+          }
+        });
+        console.log('storedMovie', storedMovie)
+
         // Associate each media with tag. 
-        await MediaTag.create({ 
-          mediumId: storedMusic.id, 
-          tagId: tag.id
-        })
-        return storedMusic;
+        await MediaTag.findOrCreate({ 
+          where: { 
+            mediumId: storedMovie.id, 
+            tagId: tag.id
+          }
+        });
+        
+        return storedMovie;
       }));
 
-    res.json(formatedData);
+      res.json(formatedData);
     }
     else { 
       res.status(404).send('Try a new word')
