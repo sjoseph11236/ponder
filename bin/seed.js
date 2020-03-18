@@ -1,6 +1,7 @@
-const { db, Media, Tag, Annotation, Feed, Combo } = require('../server/db');
+const { db, Media, Tag, Annotation, Feed, Combo, MediaTag } = require('../server/db');
 const {green, red} = require('chalk')
 const media  = require('./data/media.json');
+const mediaTags  = require('./data/mediaTags.json');
 const tags = require('./data/tags.json');
 
 const annotations = [
@@ -36,6 +37,10 @@ const seed = async() => {
   await Promise.all(annotations.map(annotation =>{ 
     return Annotation.create(annotation);
   }))
+
+  await Promise.all(mediaTags.map(mediaTag => {
+    return MediaTag.create(mediaTag)
+  }));
 
   await Combo.create({
     mediumId: 1,

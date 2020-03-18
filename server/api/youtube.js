@@ -19,7 +19,7 @@ router.get('/movies/:word', async (req, res, next) => {
     const { data } = await axios.get(URL);
 
     if(data.items.length) { 
-      // Create Tag in Database
+      // Find or Create Tag in Database
       const [ tag ]= await Tag.findOrCreate({
         where: {
           word: req.params.word
@@ -41,7 +41,6 @@ router.get('/movies/:word', async (req, res, next) => {
             type: movie.type
           }
         });
-        console.log('storedMovie', storedMovie)
 
         // Associate each media with tag. 
         await MediaTag.findOrCreate({ 
@@ -50,7 +49,7 @@ router.get('/movies/:word', async (req, res, next) => {
             tagId: tag.id
           }
         });
-        
+
         return storedMovie;
       }));
 
@@ -66,17 +65,53 @@ router.get('/movies/:word', async (req, res, next) => {
 });
 
 // /api/youtube/music/:q
-router.get('/music/:q', async (req, res, next) => { 
+router.get('/music/:word', async (req, res, next) => { 
   try {
     const channelID = 'UC2pmfLm7iq6Ov1UwYrWYkZA';
-    const q = req.params.q;
+    const q = req.params.word;
     const URL = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelID}&maxResults=${max}&q=${q}&type=video&videoEmbeddable=true&key=${API}`;
     const { data } = await axios.get(URL);
-    const formatedData = Media.formatYoutubeData(data.items, 'music');
-    await Promise.all(formatedData.map(music => {
-      return Media.create(music);
-    }));
-    res.json(formatedData);
+
+    if(data.items.length) {
+      // Find or Create Tag in Database
+      const [ tag ]= await Tag.findOrCreate({
+        where: {
+          word: req.params.word
+        }
+      });
+
+      // Format the youtube Data
+      const formatedData = Media.formatYoutubeData(data.items, 'music');
+
+      // Store the formated Data with associated Tag
+      await Promise.all(formatedData.map(async music => {
+        const [ storedMusic ] = await Media.findOrCreate({
+          where: { 
+            title: music.title,
+            artist: music.artist,
+            description: music.description,
+            url: music.url, 
+            imageUrl: music.imageUrl,
+            type: music.type
+          }
+        });
+
+        // Associate each media with tag. 
+        await MediaTag.findOrCreate({ 
+          where: { 
+            mediumId: storedMusic.id, 
+            tagId: tag.id
+          }
+        });
+
+        return storedMusic;
+      }));
+
+      res.json(formatedData);
+    }
+    else { 
+      res.status(404).send('Try a new word')
+    }
   } catch (error) {
     console.error(error);
     next(error);
