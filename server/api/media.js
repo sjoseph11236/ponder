@@ -109,33 +109,36 @@ router.post('/combo/:word', async (req, res, next) => {
       media = await Media.filterByKeyword(word);
     }
     
-    if(media.length < 2) res.send({});
-    // console.log('media', media);
-    const combo = await Combo.makeCombo(media);
-    console.log('combo >>>>',combo);
-    if(combo) { 
-      const newTag = await Tag.create({ word });
-    
-      const storedCombo =  await Combo.create({
-        mediumId: combo[0].id,
-        pairId: combo[1].id
-      });
-
-      await MediaTag.create({mediumId: combo[0].id, tagId: newTag.id})
-      await MediaTag.create({mediumId: combo[1].id, tagId: newTag.id})
-
-      await ComboTag.create({ comboId: storedCombo.id, tagId: newTag.id})
+    if(media.length < 2) {
+      res.send({})
+    }
+    else {
+      const combo = await Combo.makeCombo(media);
+      console.log("combo 115 >>>>>>", combo)
+  
+      if(combo) { 
+        const newTag = await Tag.create({ word });
       
-      const finalCombo = { 
-        id: storedCombo.id,
-        combo
+        const storedCombo =  await Combo.create({
+          mediumId: combo[0].id,
+          pairId: combo[1].id
+        });
+  
+        await MediaTag.create({mediumId: combo[0].id, tagId: newTag.id})
+        await MediaTag.create({mediumId: combo[1].id, tagId: newTag.id})
+  
+        await ComboTag.create({ comboId: storedCombo.id, tagId: newTag.id})
+        
+        const finalCombo = { 
+          id: storedCombo.id,
+          combo
+        }
+        res.json(finalCombo);
       }
-      res.json(finalCombo);
+      else { 
+        res.send({});
+      }
     }
-    else { 
-      res.send({});
-    }
-
   } catch (error) {
     console.log(error);
     next(error);

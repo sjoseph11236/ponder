@@ -36,36 +36,32 @@ const seed = async() => {
   await MediaTag.bulkCreate(mediaTags);
   await Annotation.bulkCreate(annotations);
 
-
   await Combo.create({
     mediumId: 1,
     pairId: 2
-  })
+  });
   
   await Combo.create({
     mediumId: 3,
     pairId: 2
-  })
+  });
 
   await Combo.create({
     mediumId: 1,
     pairId: 3
-  })
+  });
 
   await Feed.create({
     comboId: 1, 
     annotationId: 3, 
-  })
+  });
 
   await Feed.create({
     comboId: 1, 
     annotationId: 4, 
-  })
-
-
+  });
 
   await ComboTag.bulkCreate(comboTags);
-
 
   console.log(green('Seeding success!'));
   db.close();

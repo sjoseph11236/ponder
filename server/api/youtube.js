@@ -4,7 +4,7 @@ const { Media, Tag, MediaTag } = require('../db');
 const API = process.env.API_TOKEN || require('../../secret');
 
 // Max Results: 
-const max = 50;
+const max = 2;
 
 // Need this link + videoId
 // https://www.youtube.com/embed/
@@ -20,7 +20,7 @@ router.get('/movies/:word', async (req, res, next) => {
 
     if(data.items.length) { 
       // Find or Create Tag in Database
-      const [ tag ]= await Tag.findOrCreate({
+      const [ tag ] = await Tag.findOrCreate({
         where: {
           word: req.params.word
         }
@@ -52,8 +52,8 @@ router.get('/movies/:word', async (req, res, next) => {
 
         return storedMovie;
       }));
-
-      res.json(formatedData);
+      console.log("formatedData", formatedData)    
+      res.send(formatedData);
     }
     else { 
       res.status(404).send('Try a new word')
