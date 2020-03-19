@@ -62,6 +62,8 @@ const seed = async() => {
     annotationId: 4, 
   })
 
+
+
   await ComboTag.bulkCreate(comboTags);
 
 

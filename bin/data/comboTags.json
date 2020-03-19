@@ -1,4 +1,9 @@
 [{
   "comboId": 1,
   "tagId": 1
-}]
+},
+{
+  "comboId": 2,
+  "tagId": 3
+}
+]

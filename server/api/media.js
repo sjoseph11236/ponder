@@ -53,7 +53,6 @@ router.get('/combo', async (req, res, next ) => {
     // A built in method to find the total count of combo model. 
     const { count } = await Combo.findAndCountAll();
     const combo = await Combo.findByPk(count);
-    console.log('combo', combo);
     const comboMedia = await Combo.getComboMedia(combo);
     const finalComboMedia = Combo.finalComboMedia(combo, comboMedia);
     res.send(finalComboMedia);
@@ -104,14 +103,14 @@ router.post('/combo/:word', async (req, res, next) => {
       
       // Find all combos by the id
       media = await Media.findAssociatedMedia(associatedMedia);
-      
+      console.log('here', media);
     }
     else {
       media = await Media.filterByKeyword(word);
-      if(media.length < 2) res.send({});
     }
     
-    console.log('media', media);
+    if(media.length < 2) res.send({});
+    // console.log('media', media);
     const combo = await Combo.makeCombo(media);
     console.log('combo >>>>',combo);
     if(combo) { 
