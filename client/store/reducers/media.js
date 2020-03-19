@@ -109,8 +109,8 @@ export const postComboThunk = word => {
       }
       else { 
         // find new media with Youtube Api by the word.
-        dispatch(getYoutubeMovieThunk(word));
-        dispatch(getYoutubeMusicThunk(word));
+        dispatch(getYoutubeDataThunk(word));
+        // dispatch(getYoutubeMusicThunk(word));s
       }
     } catch (error) {
       dispatch(gotError(error.message));
@@ -122,28 +122,13 @@ export const postComboThunk = word => {
   }
 }
 
-export const getYoutubeMovieThunk = word => { 
+export const getYoutubeDataThunk = word => { 
   return async dispatch => {
     try {
       console.log('hear at Movie ', word);
-      const { data } =  await axios.get(`/api/youtube/movies/${word}`);
-      console.log("data 130.... ", data );
-    } catch (error) {
-      dispatch(gotError(error.message));
-      setTimeout(()=> {
-        dispatch(clearError());
-      }, 3000)
-      console.error(error);
-    }
-  }
-}
-
-export const getYoutubeMusicThunk = word => { 
-  return async dispatch => {
-    try {
-      console.log('hear at Music ', word);      
-      const { data } =  await axios.get(`/api/youtube/music/${word}`);
-      console.log("data 116.... ", data );
+      await axios.get(`/api/youtube/movies/${word}`);
+      await axios.get(`/api/youtube/music/${word}`);
+      dispatch(postComboThunk(word));
     } catch (error) {
       dispatch(gotError(error.message));
       setTimeout(()=> {

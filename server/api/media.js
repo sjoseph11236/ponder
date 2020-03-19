@@ -145,4 +145,13 @@ router.post('/combo/:word', async (req, res, next) => {
   }
 });
 
+router.post('/api/media/combo', async (req, res, next) => { 
+  try {
+    
+  } catch (error) {
+    console.log(error);
+    next(error);  
+  }
+});
+
 module.exports = router;
