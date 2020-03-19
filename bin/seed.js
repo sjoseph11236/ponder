@@ -35,15 +35,15 @@ const seed = async() => {
     return Tag.create(tag);
   }));
 
-  await Promise.all(annotations.map(annotation =>{ 
-    return Annotation.create(annotation);
-  }))
+
 
   await Promise.all(mediaTags.map(mediaTag => {
     return MediaTag.create(mediaTag)
   }));
 
-
+  await Promise.all(annotations.map(annotation =>{ 
+    return Annotation.create(annotation);
+  }))
 
   await Combo.create({
     mediumId: 1,

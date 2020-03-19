@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Combo from './Combo';
 import { connect } from 'react-redux';
-import { postComboThunk, getComboThunk, getNextComboThunk } from '../store/reducers/media';
+import { postComboThunk, getComboThunk, getNextComboThunk, getCombosThunk } from '../store/reducers/media';
 import { Route, Switch, Link } from 'react-router-dom';
 import Feed from './Feed';
 import Nabvbar from './Navbar';
@@ -31,7 +31,8 @@ class App extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.postComboThunk(this.state.word);
+    // this.props.postComboThunk(this.state.word);
+    this.props.getCombosThunk(this.state.word);
     this.setState({
       word: '',
       information: {}
@@ -110,6 +111,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => { 
   return { 
     getComboThunk: () => dispatch(getComboThunk()),
+    getCombosThunk: word => dispatch(getCombosThunk(word)),
     postComboThunk: word => dispatch(postComboThunk(word)),
     postComboAnnotationThunk: ( comboId, text ) => dispatch(postComboAnnotationThunk( comboId, text)),
     getComboAnnotationsThunk: comboId => dispatch(getComboAnnotationsThunk(comboId)),

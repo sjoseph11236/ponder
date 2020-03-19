@@ -4,12 +4,14 @@ import { clearAnnotations } from '../reducers/annotations';
 const initialState = {
   media: [],
   combo: {},
+  combos: [],
   error: ''
 };
 
 // ACTION TYPES
 const GOT_MEDIA = 'GOT_MEDIA';
-const GOT_COMBO = 'GOT_COMBO'
+const GOT_COMBO = 'GOT_COMBO';
+const GOT_COMBOS = 'GOT_COMBOS';
 const POSTED_COMBO = 'POSTED_COMBO';
 const GOT_ERROR = 'GOT_ERROR'
 const CLEAR_ERROR = 'CLEAR_ERROR';
@@ -26,6 +28,13 @@ export const gotCombo = combo => {
   return { 
     type: GOT_COMBO,
     combo
+  }
+}
+
+export const gotCombos = combos => {
+  return { 
+    type: GOT_COMBOS,
+    combos
   }
 }
 
@@ -57,18 +66,34 @@ export const getMediaThunk = () => {
       const { data } = await axios.get('/api/media'); 
       dispatch(gotMedia(data));
     } catch (error) {
-      console.error('This error is at getMediaThunk ', error);
+      console.error(error);
     }
   }
 }
-
+export const getCombosThunk = word => { 
+  return async dispatch => { 
+    try {
+      const { data } = await axios.get(`/api/media/combos/${word}`);
+      if(data.length){ 
+        dispatch(gotCombos(data));
+        dispatch(gotCombo(data[0]));
+      }
+      else{ 
+        dispatch(postComboThunk(word));
+      }
+    } catch (error) {
+      console.log('status', error.message)
+      console.error(error);
+    }
+  }
+}
 export const getComboThunk = () => { 
   return async dispatch => { 
     try {
       const { data } = await axios.get('api/media/combo');
       dispatch(gotCombo(data));
     } catch (error) {
-      console.error('This error is at getComboThunk ', error);
+      console.error(error);
     }
   }
 }
@@ -76,15 +101,16 @@ export const getComboThunk = () => {
 export const postComboThunk = word => { 
   return async dispatch => {
     try {
+      console.log('posting with', word);
       const { data } = await axios.post(`/api/media/combo/${word}`);
-      dispatch(postedCombo(data));
-      dispatch(clearAnnotations());
+      // dispatch(postedCombo(data));
+      // dispatch(clearAnnotations());
     } catch (error) {
       dispatch(gotError(error.message));
       setTimeout(()=> {
         dispatch(clearError());
       }, 3000)
-      console.error('This error is at postComboThunk ', error);
+      console.error(error);
     }
   }
 }
@@ -95,7 +121,7 @@ export const getNextComboThunk = currComboId => {
       const { data } = await axios.get(`api/media/${currComboId}/next`);
       dispatch(gotCombo(data));
     } catch (error) {
-      console.error('This error is at getNextComboThunk ', error);
+      console.error(error);
     }
   }
 }
@@ -111,6 +137,8 @@ const mediaReducer = (state = initialState, action) => {
       return { ...state, media: action.media };
     case GOT_COMBO: 
       return { ...state, combo: action.combo };
+    case GOT_COMBOS: 
+      return { ...state, combos: action.combos };
     case POSTED_COMBO: 
       return { ...state, combo: action.combo };
     default:

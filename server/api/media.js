@@ -13,8 +13,8 @@ router.get('/', async (req, res, next) => {
 });
 
 // Find all combos with associated word
-// GET /api/media/combo/:word
-router.get('/combo/:word', async (req, res, next) => { 
+// GET /api/media/combos/:word
+router.get('/combos/:word', async (req, res, next) => { 
   try {
     const word = req.params.word; 
     // Find word in Tag table
@@ -37,11 +37,11 @@ router.get('/combo/:word', async (req, res, next) => {
       res.send(allfinalComboMedia);
     }
     else { 
-      res.status(404).send('Try new word');
+      // send an empty arr to look for tag in mediaTag or media description to then create combo;
+      res.send([]);
     }
-
   } catch (error) {
-    console.log('error from combo GET route in media ', error);
+    console.log(error);
     next(error);
   }
 });
@@ -58,7 +58,7 @@ router.get('/combo', async (req, res, next ) => {
     const finalComboMedia = Combo.finalComboMedia(combo, comboMedia);
     res.send(finalComboMedia);
   } catch (error) {
-    console.log('error from GET route in /media/combo ', error);
+    console.log(error);
     next(error)
   }
 });
@@ -79,7 +79,7 @@ router.get('/:comboId/next', async (req, res, next ) => {
     
     res.send(finalCombo);
   } catch (error) {
-    console.log('error from GET route in /media/combo/next ', error);
+    console.log(error);
     next(error)
   }
 })
@@ -87,7 +87,13 @@ router.get('/:comboId/next', async (req, res, next ) => {
 // POST /api/media/combo/:word
 router.post('/combo/:word', async (req, res, next) => {
   try {
-    const filteredMedia = await Media.filterByKeyword(req.params.word)
+    const word = req.params.word;
+    // First look for word in tags
+    // Find word in Tag table
+    const tag = await Tag.findOne({where: {word }});
+    console.log('tag',tag)
+
+    const filteredMedia = await Media.filterByKeyword(word)
     
     if(filteredMedia.length === 1) return res.status(404).send('choose a new keyword');
     
@@ -108,7 +114,7 @@ router.post('/combo/:word', async (req, res, next) => {
     res.json(finalCombo);
 
   } catch (error) {
-    console.log('error from combo POST route in media ', error);
+    console.log(error);
     next(error);
   }
 });
