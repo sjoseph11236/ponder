@@ -70,19 +70,34 @@ Combo.getComboMedia = async combo => {
   }
 }
 
-Combo.makeCombo = media => {
+Combo.makeCombo = async media => {
+  try {
+    let right = 0; 
+    let left = media.length - 1; 
+    let combo; 
 
-  if(media.length === 2 ) return media;
-  //Get the length
-  const filteredMediaLength = media.length;
-  // Choose On randomIdx
-  const randomIdx1 = Math.floor(Math.random() * filteredMediaLength);
-  // Get th idx before it
-  const randomIdx2 = Math.abs(randomIdx1 - 1);
+    while(right < media.length - 1) {
+      if(right == left){ 
+        right++;
+        left = media.length - 1;
+      }
+    
+      const check1 = await Combo.findOne({where: { mediumId: media[right].id, pairId: media[left].id}})
+      const check2 = await Combo.findOne({where: { mediumId: media[left].id, pairId: media[right].id}})
+      
+      if(right !== left) {
+        if(check1 == null && check2 == null) {
+          combo = [media[right], media[left]];
+          break;
+        }
+      }
+      left--;
+    }
 
-  const combo = [media[randomIdx1], media[randomIdx2]];
-
-  return combo;
+    return combo; 
+  } catch (error) {
+    
+  }
 }
 
 module.exports = Combo; 
