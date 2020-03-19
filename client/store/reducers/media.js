@@ -82,7 +82,6 @@ export const getCombosThunk = word => {
         dispatch(postComboThunk(word));
       }
     } catch (error) {
-      console.log('status', error.message)
       console.error(error);
     }
   }
@@ -103,9 +102,11 @@ export const postComboThunk = word => {
     try {
       console.log('posting with', word);
       const { data } = await axios.post(`/api/media/combo/${word}`);
-      // dispatch(postedCombo(data));
-      // dispatch(clearAnnotations());
+      console.log('data', data);
+      dispatch(postedCombo(data));
+      dispatch(clearAnnotations());
     } catch (error) {
+      console.log('message', error.message)
       dispatch(gotError(error.message));
       setTimeout(()=> {
         dispatch(clearError());

@@ -1,5 +1,5 @@
 const router  = require('express').Router();
-const { Media, Combo, Tag, ComboTag } = require('../db');
+const { Media, Combo, Tag, ComboTag, MediaTag } = require('../db');
 
 // GET /api/media
 router.get('/', async (req, res, next) => { 
@@ -90,29 +90,42 @@ router.post('/combo/:word', async (req, res, next) => {
     const word = req.params.word;
     // First look for word in tags
     // Find word in Tag table
-    const tag = await Tag.findOne({where: {word }});
-    console.log('tag',tag)
+    const tag = await Tag.findOne({where: { word }});
+    let media;
+    
+    if(tag) { 
+      const associatedMedia = await MediaTag.findAll({
+        where: { 
+          tagId: tag.id
+        }
+      })
 
-    const filteredMedia = await Media.filterByKeyword(word)
-    
-    if(filteredMedia.length === 1) return res.status(404).send('choose a new keyword');
-    
-    const combo = await Combo.makeCombo(filteredMedia);
-    
-    const storedCombo =  await Combo.findOrCreate({
-      where: {
-        mediumId: combo[0].id,
-        pairId: combo[1].id
-      }
-    });
-
-    const finalCombo = { 
-      id: storedCombo[0].id,
-      combo
+      if(associatedMedia.length < 2) res.send([]);
+      
+      // Find all combos by the id
+      media = await Media.findAssociatedMedia(associatedMedia);
+      
     }
+    else {
+      media = await Media.filterByKeyword(word);
+      if(media.length < 2) res.send([]);
+    }
+  
+    const combo = await Combo.makeCombo(media);
+      
+      const storedCombo =  await Combo.findOrCreate({
+        where: {
+          mediumId: combo[0].id,
+          pairId: combo[1].id
+        }
+      });
 
-    res.json(finalCombo);
+      const finalCombo = { 
+        id: storedCombo[0].id,
+        combo
+      }
 
+      res.json(finalCombo);
   } catch (error) {
     console.log(error);
     next(error);

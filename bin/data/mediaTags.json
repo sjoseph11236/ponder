@@ -6,7 +6,13 @@
 {
   "mediumId": 2,
   "tagId": 1
-},{
+},
+{
   "mediumId": 4,
   "tagId": 1
-}]
+},
+{
+  "mediumId": 3,
+  "tagId": 2
+}
+]

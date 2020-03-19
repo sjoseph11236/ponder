@@ -42,6 +42,23 @@ const Media = db.define('media', {
   }
 });
 
+Media.findAssociatedMedia = async associatedMedia => { 
+
+  try {
+    const media = [];
+    
+    for(let i = 0; i < associatedMedia.length; i++) {
+      let medium = associatedMedia[i];
+      let gotMedium = await Media.findByPk(medium.mediumId);
+      media.push(gotMedium);
+    }
+
+    return media;
+  } catch (error) {
+    console.log(error);    
+  }
+}
+
 Media.formatYoutubeData = (data, type) => { 
   try {
     const formatedData = data.map(datum => {
@@ -57,7 +74,7 @@ Media.formatYoutubeData = (data, type) => {
 
     return formatedData;
   } catch (error) {
-    console.log('This error is coming from class method in formatYoutubeData', error );
+    console.log(error);
   }
 }
 
@@ -75,7 +92,7 @@ Media.filterByKeyword = async (keyword) => {
     return filteredByKeywordInDescription;
 
   } catch (error) {
-    console.log('This error is coming from class method in filterByKeyword ', error );
+    console.log( error );
   }
 };
 

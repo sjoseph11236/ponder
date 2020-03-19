@@ -27,23 +27,15 @@ const annotations = [
 const seed = async() => {
   await db.sync({force: true});
 
-  await Promise.all(media.map(medium => {
-    return Media.create(medium);
-  }));
+  // The bulkCreate method is better because it doesnt alter the order of ids assignment.
+  // Promise.all alters the id assignment which impacts expected data. This probably happens because promiseAll  what for all the promised to finish in there own time.
+  
+  // For example, assume that you have ten promises (Async operation to perform a network call or a database connection). You have to know when all the promises get resolved or you have to wait till all the promises resolve. So you are passing all ten promises to Promise.all. Then, Promise.all itself as a promise will get resolved once all the ten promises get resolved or any of the ten promises get rejected with an error.
+  await Media.bulkCreate(media);
+  await Tag.bulkCreate(tags);
+  await MediaTag.bulkCreate(mediaTags);
+  await Annotation.bulkCreate(annotations);
 
-  await Promise.all(tags.map(tag => {
-    return Tag.create(tag);
-  }));
-
-
-
-  await Promise.all(mediaTags.map(mediaTag => {
-    return MediaTag.create(mediaTag)
-  }));
-
-  await Promise.all(annotations.map(annotation =>{ 
-    return Annotation.create(annotation);
-  }))
 
   await Combo.create({
     mediumId: 1,
@@ -70,9 +62,7 @@ const seed = async() => {
     annotationId: 4, 
   })
 
-  await Promise.all(comboTags.map(comboTag => {
-    return ComboTag.create(comboTag)
-  }));
+  await ComboTag.bulkCreate(comboTags);
 
 
   console.log(green('Seeding success!'));
