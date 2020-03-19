@@ -17,7 +17,35 @@ const Combo = db.define('combo', {
     allowNull: false
   }
 });
+Combo.findAssociatedCombos = async associatedCombos => { 
+  const combos = [];
+      
+  for(let i = 0; i < associatedCombos.length; i++) {
+    let combo = associatedCombos[i];
+    let gotCombo = await Combo.findByPk(combo.comboId);
+    combos.push(gotCombo);
+  }
 
+  return combos;
+}
+
+Combo.findAllMediaInCombo = async combos => { 
+  const allfinalComboMedia = [];
+  for(let j = 0; j < combos.length; j++) {
+    let combo = combos[j];
+    const comboMedia = await Combo.getComboMedia(combo);
+    const finalComboMedia = Combo.finalComboMedia(combo, comboMedia);
+    allfinalComboMedia.push(finalComboMedia);
+  }
+  return allfinalComboMedia;
+}
+
+Combo.finalComboMedia = (combo, comboMedia) => { 
+  return {
+    id: combo.id, 
+    combo: comboMedia
+  }
+}
 Combo.getComboMedia = async combo => {
   try {
     const gotMedia = await Media.findByPk(combo.mediumId);

@@ -1,5 +1,5 @@
 const router  = require('express').Router();
-const { Media, Combo } = require('../db');
+const { Media, Combo, Tag, ComboTag } = require('../db');
 
 // GET /api/media
 router.get('/', async (req, res, next) => { 
@@ -12,17 +12,50 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+// Find all combos with associated word
+// GET /api/media/combo/:word
+router.get('/combo/:word', async (req, res, next) => { 
+  try {
+    const word = req.params.word; 
+    // Find word in Tag table
+    const tag = await Tag.findOne({where: {word }});
+    if(tag){
+      // Find all comboIds associated with Combo
+      const associatedCombos = await ComboTag.findAll({
+        where:{
+          tagId: tag.id
+        }
+      });
+      
+      // Find all combos by the id
+      const combos = await Combo.findAssociatedCombos(associatedCombos);
+      
+      // Find all the media in each combo 
+      const allfinalComboMedia = await Combo.findAllMediaInCombo(combos);
+
+
+      res.send(allfinalComboMedia);
+    }
+    else { 
+      res.status(404).send('Try new word');
+    }
+
+  } catch (error) {
+    console.log('error from combo GET route in media ', error);
+    next(error);
+  }
+});
+
+// Route to load up last combo in table
 // GET /api/media/combo
 router.get('/combo', async (req, res, next ) => {
   try {
     // A built in method to find the total count of combo model. 
     const { count } = await Combo.findAndCountAll();
     const combo = await Combo.findByPk(count);
+    console.log('combo', combo);
     const comboMedia = await Combo.getComboMedia(combo);
-    const finalComboMedia = {
-      id: combo.id, 
-      combo: comboMedia
-    }
+    const finalComboMedia = Combo.finalComboMedia(combo, comboMedia);
     res.send(finalComboMedia);
   } catch (error) {
     console.log('error from GET route in /media/combo ', error);
@@ -67,9 +100,6 @@ router.post('/combo/:word', async (req, res, next) => {
       }
     });
 
-    // TO DO: Create a class method in Tag to create a tag ro find a tag for a storedCombo
-    // set the tag to each media in mediaTag model
-  
     const finalCombo = { 
       id: storedCombo[0].id,
       combo
@@ -78,7 +108,7 @@ router.post('/combo/:word', async (req, res, next) => {
     res.json(finalCombo);
 
   } catch (error) {
-    console.log('error from combo GET route in media ', error);
+    console.log('error from combo POST route in media ', error);
     next(error);
   }
 });
