@@ -97,6 +97,28 @@ export const getComboThunk = () => {
   }
 }
 
+export const checkMediaDescriptionThunk = word =>  {
+  return async dispatch => { 
+    try {
+      console.log('posting with', word);
+      const { data } = await axios.post(`/api/media/description/combo/${word}`);
+      // check if new combo was made. 
+      if(Object.keys(data).length){
+        dispatch(postedCombo(data));
+        dispatch(clearAnnotations());
+      }
+      else { 
+        // find new media with Youtube Api by the word.
+        dispatch(getYoutubeDataThunk(word));
+        // dispatch(getYoutubeMusicThunk(word));s
+      }
+    } catch (error) {
+      console.error(error);      
+    }
+  }
+}
+
+// This thunk is triggered by submit of search bar
 export const postComboThunk = word => { 
   return async dispatch => {
     try {
@@ -109,8 +131,8 @@ export const postComboThunk = word => {
       }
       else { 
         // find new media with Youtube Api by the word.
-        dispatch(getYoutubeDataThunk(word));
-        // dispatch(getYoutubeMusicThunk(word));s
+        // dispatch(getYoutubeDataThunk(word));
+        dispatch(checkMediaDescriptionThunk(word));
       }
     } catch (error) {
       dispatch(gotError(error.message));

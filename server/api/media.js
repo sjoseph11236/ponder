@@ -83,6 +83,62 @@ router.get('/:comboId/next', async (req, res, next ) => {
   }
 })
 
+// GET all media by the searched word: 
+router.get('/:word', async (req, res, next) => { 
+  try {
+    const word = req.params.word;
+    
+    const tag = await Tag.findOne({ where: { word } });
+
+    if(tag) { 
+      const associatedMedia = await MediaTag.findAll({
+        where: { 
+          tagId: tag.id
+        }
+      })
+
+      // Need more media with tag from description route
+      if(associatedMedia.length < 2) res.send({});
+
+      // Find all media by id.
+      const media = await Media.findAssociatedMedia(associatedMedia);
+
+      res.send(media);
+    }
+    else {
+      // this response leads to checking the description
+      res.send({});
+    }
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+});
+
+// GET all media with the searched word in description: 
+router.get('/description/:word', async (req, res, next) => { 
+  try {
+    const word = req.params.word;
+    const media = await Media.filterByKeyword(word);
+    
+    if(media.length < 2) {
+      // This  response leads to checking youtube api.
+      res.send({})
+    }
+    else {
+      // Create new Tag from word found in description
+      const newTag = await Tag.create({ word });
+      // assign Tag to media 
+      const addMediaTags = await MediaTag.assignTag(media, newTag);
+      res.send(addMediaTags);
+    }
+  } catch (error) {
+    console.log(error);
+    next(error)
+  }
+});
+
+// This route is creating a new Combo from tags already in the database 
 // POST /api/media/combo/:word
 router.post('/combo/:word', async (req, res, next) => {
   try {
@@ -99,17 +155,55 @@ router.post('/combo/:word', async (req, res, next) => {
         }
       })
 
+      // Need more media with tag from description route
       if(associatedMedia.length < 2) res.send({});
       
-      // Find all combos by the id
+      // Find all media by id.
       media = await Media.findAssociatedMedia(associatedMedia);
       console.log('here', media);
+
+      // create a new unique pair
+      const combo = await Combo.makeCombo(media);
+      console.log("combo 115 >>>>>>", combo)
+  
+      if(combo) { 
+        
+        const storedCombo =  await Combo.create({
+          mediumId: combo[0].id,
+          pairId: combo[1].id
+        });
+
+        await ComboTag.create({ comboId: storedCombo.id, tagId: tag.id})
+      
+        const finalCombo = { 
+          id: storedCombo.id,
+          combo
+        }
+        res.json(finalCombo);
+      }
+      else { 
+      // this response leads to checking the description
+        res.send({});
+      } 
     }
-    else {
-      media = await Media.filterByKeyword(word);
+    else { 
+      // this response leads to checking the description
+      res.send({})
     }
-    
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+
+router.post('/description/combo/:word', async (req, res, next) => { 
+  try {
+    const word = req.params.word;
+    const media = await Media.filterByKeyword(word);
+
     if(media.length < 2) {
+      // This  response leads to checking youtube api.
       res.send({})
     }
     else {
@@ -136,6 +230,7 @@ router.post('/combo/:word', async (req, res, next) => {
         res.json(finalCombo);
       }
       else { 
+        // This response leads to youtube api call
         res.send({});
       }
     }
@@ -144,5 +239,4 @@ router.post('/combo/:word', async (req, res, next) => {
     next(error);
   }
 });
-
 module.exports = router;

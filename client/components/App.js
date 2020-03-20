@@ -31,8 +31,8 @@ class App extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    // this.props.postComboThunk(this.state.word);
-    this.props.getCombosThunk(this.state.word);
+    this.props.postComboThunk(this.state.word);
+    // this.props.getCombosThunk(this.state.word);
     this.setState({
       word: '',
       information: {}

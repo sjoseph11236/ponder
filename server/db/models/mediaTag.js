@@ -12,4 +12,19 @@ const MediaTag = db.define('mediaTag', {
   }
 });
 
+MediaTag.assignTag = async (media, tag) => {
+  try {
+    const mediaTags = []
+
+    for(let i = 0; i < media.length; i++) {
+      let medium = media[i];
+      let mediaTag = await MediaTag.create({mediumId: medium.id, tagId: tag.id});
+      mediaTags.push(mediaTag);
+    }
+
+    return mediaTags;
+  } catch (error) {
+    console.error(error);
+  }
+}
 module.exports = MediaTag;
