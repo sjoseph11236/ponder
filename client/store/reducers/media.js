@@ -70,6 +70,41 @@ export const getMediaThunk = () => {
     }
   }
 }
+
+export const getMediaByWordThunk = word => { 
+  return async dispatch => { 
+    try {
+      console.log(" word 77",  word )
+      const { data } = await axios.get(`/api/media/${word}`);
+      console.log("data 79", data);
+      if(data.length){ 
+        dispatch(postComboThunk(word, data))
+      }
+      else{ 
+        dispatch(getMediaByWordInDescriptionThunk(word));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
+export const getMediaByWordInDescriptionThunk = word => { 
+  return async dispatch => {
+    try {
+      console.log('word  93', word);
+      const { data } = await axios.get(`/api/media/description/${word}`);
+      console.log("data 94 ", data );
+      if(data.length){ 
+        dispatch(postComboThunk(word, data))
+      }
+      else{ 
+        dispatch(getYoutubeDataThunk(word));
+      }
+    } catch (error) {
+      console.error(error);      
+    }
+  }
+}
 export const getCombosThunk = word => { 
   return async dispatch => { 
     try {
@@ -97,43 +132,37 @@ export const getComboThunk = () => {
   }
 }
 
-export const checkMediaDescriptionThunk = word =>  {
-  return async dispatch => { 
-    try {
-      console.log('posting with', word);
-      const { data } = await axios.post(`/api/media/description/combo/${word}`);
-      // check if new combo was made. 
-      if(Object.keys(data).length){
-        dispatch(postedCombo(data));
-        dispatch(clearAnnotations());
-      }
-      else { 
-        // find new media with Youtube Api by the word.
-        dispatch(getYoutubeDataThunk(word));
-        // dispatch(getYoutubeMusicThunk(word));s
-      }
-    } catch (error) {
-      console.error(error);      
-    }
-  }
-}
+// export const checkMediaDescriptionThunk = word =>  {
+//   return async dispatch => { 
+//     try {
+//       console.log('posting with', word);
+//       const { data } = await axios.post(`/api/media/description/combo/${word}`);
+//       // check if new combo was made. 
+//       if(Object.keys(data).length){
+//         dispatch(postedCombo(data));
+//         dispatch(clearAnnotations());
+//       }
+//       else { 
+//         // find new media with Youtube Api by the word.
+//         dispatch(getYoutubeDataThunk(word));
+//         // dispatch(getYoutubeMusicThunk(word));s
+//       }
+//     } catch (error) {
+//       console.error(error);      
+//     }
+//   }
+// }
 
 // This thunk is triggered by submit of search bar
-export const postComboThunk = word => { 
+export const postComboThunk = (word, media) => { 
   return async dispatch => {
     try {
       console.log('posting with', word);
-      const { data } = await axios.post(`/api/media/combo/${word}`);
+      const { data } = await axios.post(`/api/media/combo/${word}`, media);
+      console.log("postComboThunk -> data", data);
       // check if new combo was made. 
-      if(Object.keys(data).length){
-        dispatch(postedCombo(data));
-        dispatch(clearAnnotations());
-      }
-      else { 
-        // find new media with Youtube Api by the word.
-        // dispatch(getYoutubeDataThunk(word));
-        dispatch(checkMediaDescriptionThunk(word));
-      }
+      dispatch(postedCombo(data));
+      dispatch(clearAnnotations());
     } catch (error) {
       dispatch(gotError(error.message));
       setTimeout(()=> {
@@ -147,15 +176,21 @@ export const postComboThunk = word => {
 export const getYoutubeDataThunk = word => { 
   return async dispatch => {
     try {
-      console.log('hear at Movie ', word);
-      await axios.get(`/api/youtube/movies/${word}`);
-      await axios.get(`/api/youtube/music/${word}`);
-      dispatch(postComboThunk(word));
+      console.log('hear at Movie 186 ', word);
+      const movies = await axios.get(`/api/youtube/movies/${word}`);
+      console.log("movies  188", movies.data );
+      const music = await axios.get(`/api/youtube/music/${word}`);
+      console.log("music", music.data);
+      if(!music.data.length && !movies.data.length){
+        dispatch(gotError('Try a different word'));
+        setTimeout(()=> {
+          dispatch(clearError());
+        }, 3000)
+      }
+      else {
+        dispatch(getMediaByWordThunk(word));
+      }
     } catch (error) {
-      dispatch(gotError(error.message));
-      setTimeout(()=> {
-        dispatch(clearError());
-      }, 3000)
       console.error(error);
     }
   }

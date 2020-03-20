@@ -4,7 +4,7 @@ const { Media, Tag, MediaTag } = require('../db');
 const API = process.env.API_TOKEN || require('../../secret');
 
 // Max Results: 
-const max = 6;
+const max = 2;
 
 // Need this link + videoId
 // https://www.youtube.com/embed/
@@ -56,7 +56,7 @@ router.get('/movies/:word', async (req, res, next) => {
       res.send(formatedData);
     }
     else { 
-      res.status(404).send('Try a new word')
+      res.send([]);
     }
   } catch (error) {
     console.error(error);
@@ -110,7 +110,7 @@ router.get('/music/:word', async (req, res, next) => {
       res.json(formatedData);
     }
     else { 
-      res.status(404).send('Try a new word')
+      res.send([]);
     }
   } catch (error) {
     console.error(error);

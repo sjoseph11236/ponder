@@ -84,6 +84,7 @@ router.get('/:comboId/next', async (req, res, next ) => {
 })
 
 // GET all media by the searched word: 
+// GET /api/media/:word
 router.get('/:word', async (req, res, next) => { 
   try {
     const word = req.params.word;
@@ -102,12 +103,12 @@ router.get('/:word', async (req, res, next) => {
 
       // Find all media by id.
       const media = await Media.findAssociatedMedia(associatedMedia);
-
+      // Send combo to create combo with word
       res.send(media);
     }
     else {
       // this response leads to checking the description
-      res.send({});
+      res.send([]);
     }
   } catch (error) {
     console.log(error);
@@ -116,6 +117,7 @@ router.get('/:word', async (req, res, next) => {
 });
 
 // GET all media with the searched word in description: 
+// GET /api/media/description/:word
 router.get('/description/:word', async (req, res, next) => { 
   try {
     const word = req.params.word;
@@ -123,14 +125,15 @@ router.get('/description/:word', async (req, res, next) => {
     
     if(media.length < 2) {
       // This  response leads to checking youtube api.
-      res.send({})
+      res.send([]);
     }
     else {
       // Create new Tag from word found in description
       const newTag = await Tag.create({ word });
       // assign Tag to media 
       const addMediaTags = await MediaTag.assignTag(media, newTag);
-      res.send(addMediaTags);
+      // send media to create a combo with word
+      res.send(media);
     }
   } catch (error) {
     console.log(error);
@@ -143,100 +146,37 @@ router.get('/description/:word', async (req, res, next) => {
 router.post('/combo/:word', async (req, res, next) => {
   try {
     const word = req.params.word;
+    const media = req.body;
     // First look for word in tags
     // Find word in Tag table
     const tag = await Tag.findOne({where: { word }});
-    let media;
-    
-    if(tag) { 
-      const associatedMedia = await MediaTag.findAll({
-        where: { 
-          tagId: tag.id
-        }
-      })
 
-      // Need more media with tag from description route
-      if(associatedMedia.length < 2) res.send({});
-      
-      // Find all media by id.
-      media = await Media.findAssociatedMedia(associatedMedia);
-      console.log('here', media);
-
-      // create a new unique pair
-      const combo = await Combo.makeCombo(media);
-      console.log("combo 115 >>>>>>", combo)
+    // create a new unique pair
+    const combo = await Combo.makeCombo(media);
+    console.log("combo 115 >>>>>>", combo)
   
-      if(combo) { 
-        
-        const storedCombo =  await Combo.create({
-          mediumId: combo[0].id,
-          pairId: combo[1].id
-        });
+    if(combo) { 
+      const storedCombo =  await Combo.create({
+        mediumId: combo[0].id,
+        pairId: combo[1].id
+      });
 
-        await ComboTag.create({ comboId: storedCombo.id, tagId: tag.id})
-      
-        const finalCombo = { 
-          id: storedCombo.id,
-          combo
-        }
-        res.json(finalCombo);
+      await ComboTag.create({ comboId: storedCombo.id, tagId: tag.id})
+    
+      const finalCombo = { 
+        id: storedCombo.id,
+        combo
       }
-      else { 
-      // this response leads to checking the description
-        res.send({});
-      } 
+      res.json(finalCombo);
     }
     else { 
-      // this response leads to checking the description
-      res.send({})
-    }
+    // this response leads to checking the description
+      res.send({});
+    } 
   } catch (error) {
     console.log(error);
     next(error);
   }
 });
 
-
-router.post('/description/combo/:word', async (req, res, next) => { 
-  try {
-    const word = req.params.word;
-    const media = await Media.filterByKeyword(word);
-
-    if(media.length < 2) {
-      // This  response leads to checking youtube api.
-      res.send({})
-    }
-    else {
-      const combo = await Combo.makeCombo(media);
-      console.log("combo 115 >>>>>>", combo)
-  
-      if(combo) { 
-        const newTag = await Tag.create({ word });
-      
-        const storedCombo =  await Combo.create({
-          mediumId: combo[0].id,
-          pairId: combo[1].id
-        });
-  
-        await MediaTag.create({mediumId: combo[0].id, tagId: newTag.id})
-        await MediaTag.create({mediumId: combo[1].id, tagId: newTag.id})
-  
-        await ComboTag.create({ comboId: storedCombo.id, tagId: newTag.id})
-        
-        const finalCombo = { 
-          id: storedCombo.id,
-          combo
-        }
-        res.json(finalCombo);
-      }
-      else { 
-        // This response leads to youtube api call
-        res.send({});
-      }
-    }
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
-});
 module.exports = router;
