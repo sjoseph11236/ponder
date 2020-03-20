@@ -153,7 +153,7 @@ router.post('/combo/:word', async (req, res, next) => {
 
     // create a new unique pair
     const combo = await Combo.makeCombo(media);
-    console.log("combo 115 >>>>>>", combo)
+    console.log("combo 156 >>>>>>", combo)
   
     if(combo) { 
       const storedCombo =  await Combo.create({

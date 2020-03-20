@@ -70,7 +70,8 @@ Combo.getComboMedia = async combo => {
   }
 }
 
-Combo.makeCombo = async media => {
+Combo.makeCombo = async media => { 
+console.log("media 74", media )
   try {
     let right = 0; 
     let left = media.length - 1; 
