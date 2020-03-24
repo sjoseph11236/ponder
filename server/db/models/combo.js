@@ -66,7 +66,7 @@ Combo.getComboMedia = async combo => {
     
     return media;
   } catch (error) {
-    console.log('error from combo model getComboMedia ', error);
+    console.error(error);
   }
 }
 
@@ -75,6 +75,10 @@ console.log("media 74", media )
   try {
     let right = 0; 
     let left = media.length - 1; 
+    let combos = {
+      newCombo: [],
+      exisited: []
+    }
     let combo; 
 
     while(right < media.length - 1) {
@@ -83,21 +87,28 @@ console.log("media 74", media )
         left = media.length - 1;
       }
     
+      console.log('starting new check..........')
       const check1 = await Combo.findOne({where: { mediumId: media[right].id, pairId: media[left].id}})
       const check2 = await Combo.findOne({where: { mediumId: media[left].id, pairId: media[right].id}})
-      
+      console.log('check 1: ', check1);
+      console.log('check 2: ', check2);
       if(right !== left) {
         if(check1 == null && check2 == null) {
-          combo = [media[right], media[left]];
+          combos.newCombo = [media[right], media[left]];
           break;
+        }
+        else if(check1 !== null || check2 !== null){
+          let exisitingCombo = check1 || check2;
+          combos.exisited.push(exisitingCombo);
         }
       }
       left--;
     }
-
-    return combo; 
-  } catch (error) {
     
+    console.log("combos", combos)
+    return combos; 
+  } catch (error) {
+    console.error(error);
   }
 }
 

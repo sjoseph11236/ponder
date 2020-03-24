@@ -93,10 +93,8 @@ router.get('/:word', async (req, res, next) => {
 
     if(tag) { 
       const associatedMedia = await MediaTag.findAll({
-        where: { 
-          tagId: tag.id
-        }
-      })
+        where: { tagId: tag.id }
+      });
 
       // Need more media with tag from description route
       if(associatedMedia.length < 2) res.send({});
@@ -152,10 +150,10 @@ router.post('/combo/:word', async (req, res, next) => {
     const tag = await Tag.findOne({where: { word }});
 
     // create a new unique pair
-    const combo = await Combo.makeCombo(media);
-    console.log("combo 156 >>>>>>", combo)
-  
-    if(combo) { 
+    const possibleCombos = await Combo.makeCombo(media);
+
+    if(possibleCombos.newCombo.length) { 
+      let combo = possibleCombos.newCombo;
       const storedCombo =  await Combo.create({
         mediumId: combo[0].id,
         pairId: combo[1].id
@@ -167,6 +165,30 @@ router.post('/combo/:word', async (req, res, next) => {
         id: storedCombo.id,
         combo
       }
+      res.json(finalCombo);
+    }
+    else if(possibleCombos.exisited){
+      let combos = possibleCombos.exisited;
+
+      const storedCombos = ComboTag.tagCombos(combos, tag);
+
+      const medium = await Media.findOne({
+        where: { 
+          id: combos[0].mediumId
+        }
+      });
+
+      const pair = await Media.findOne({
+        where: { 
+          id: combos[0].pairId
+        }
+      });
+
+      const finalCombo = { 
+        id: combos[0].id,
+        combo: [medium, pair]
+      }
+
       res.json(finalCombo);
     }
     else { 
