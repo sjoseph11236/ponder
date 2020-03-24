@@ -4,7 +4,7 @@ const { Media, Tag, MediaTag } = require('../db');
 const API = process.env.API_TOKEN || require('../../secret');
 
 // Max Results: 
-const max = 2;
+const max = 10;
 
 // Need this link + videoId
 // https://www.youtube.com/embed/

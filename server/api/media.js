@@ -74,7 +74,7 @@ router.get('/:comboId/next', async (req, res, next ) => {
     const finalCombo = { 
       id: combo.id,
       combo: comboMedia
-    }
+    };
     
     res.send(finalCombo);
   } catch (error) {
@@ -135,7 +135,7 @@ router.get('/description/:word', async (req, res, next) => {
     }
   } catch (error) {
     console.log(error);
-    next(error)
+    next(error);
   }
 });
 
@@ -159,12 +159,13 @@ router.post('/combo/:word', async (req, res, next) => {
         pairId: combo[1].id
       });
 
-      await ComboTag.create({ comboId: storedCombo.id, tagId: tag.id})
+      await ComboTag.create({ comboId: storedCombo.id, tagId: tag.id});
     
       const finalCombo = { 
         id: storedCombo.id,
         combo
-      }
+      };
+
       res.json(finalCombo);
     }
     else if(possibleCombos.exisited){
