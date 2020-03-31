@@ -3,8 +3,11 @@ const chalk = require('chalk');
 
 console.log(chalk.yellow('Opening database connection'));
 
-const db = new Sequelize('postgres://localhost:5432/ponder', {
+const database = 'ponder';
+const databaseURL = process.env.DATABASE_URL ||`postgres://localhost:5432/${database}`;
+const db = new Sequelize(databaseURL, {
   logging: false
 });
+
 
 module.exports = db;
