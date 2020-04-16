@@ -11,6 +11,10 @@ This is my boiler plate:
 
 - Add validations to models 
 
+### Heroku:
+- Seed heroku database with `heroku run node db/seeds.js `
+
 
 ### SOURCES:
 [Enzyme set-up](https://www.freecodecamp.org/news/how-to-set-up-jest-enzyme-like-a-boss-8455a2bc6d56/)
+[Seed Deployed Site](https://dev.to/effingkay/deploy-your-app-to-heroku-60g)
