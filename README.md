@@ -12,33 +12,36 @@
 **Generate Combo**
 
 User begins by searching by a keyword to generate a combo of movie and music clips gathered from Youtube API:  
-
-<img src="https://media.giphy.com/media/LSRM3UfFrzf4AisqaU/giphy.gif">
-
+  <p align="center">
+    <img src="https://media.giphy.com/media/LSRM3UfFrzf4AisqaU/giphy.gif">
+  </p>
+  
 **Next Combo**
 
 User can view other combos that are associated with the search keyword by clicking next button:  
-
-<img src="https://media.giphy.com/media/WmjN79LIpqQtoAZggy/giphy.gif">
+  <p align="center">
+    <img src="https://media.giphy.com/media/WmjN79LIpqQtoAZggy/giphy.gif">
+  </p>
 
 **View Media**
 
 User can view movie and music clips:  
-
-<img src="https://media.giphy.com/media/LoIxsXRWSDceFAlg2C/giphy.gif">
+  <p align="center">
+    <img src="https://media.giphy.com/media/LoIxsXRWSDceFAlg2C/giphy.gif">
+  </p>
 
 **Annotate Combo**
 
 Next, a user can annotate on selected combo.
-
-<img src="https://media.giphy.com/media/d88dFwmdnCppVNMpfm/giphy.gif">
-
+  <p align="center">
+    <img src="https://media.giphy.com/media/d88dFwmdnCppVNMpfm/giphy.gif">
+  </p>
 **Feed**
 
 After, user can click on the `Feed` to view annotations for a combo. 
-
-<img src="https://media.giphy.com/media/YnTftqFBQFFDBxVeId/giphy.gif">
-
+  <p align="center">
+    <img src="https://media.giphy.com/media/YnTftqFBQFFDBxVeId/giphy.gif">
+  </p>
 Visit the site and try it out for yourself to see of these features in action: [Visit Here](https://ponder-ap.herokuapp.com/#/)
 
 ## Take Aways: 
