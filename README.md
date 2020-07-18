@@ -1,7 +1,9 @@
 # Ponder:
   A platform for users to annotate popular media and connect through shared thoughts and interests.
+  <p align="center">
+    <img src="https://media.giphy.com/media/UU1fbAXFo11pkwfAeC/giphy.gif">  
+  </p>
 
-  <img src="https://media.giphy.com/media/UU1fbAXFo11pkwfAeC/giphy.gif">
 
   [Visit Here](https://ponder-ap.herokuapp.com/#/)
 
