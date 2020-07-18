@@ -7,7 +7,7 @@
 
   [Visit Here](https://ponder-ap.herokuapp.com/#/)
 
-# Image Walkthrough
+# Image Walk-through
 
 **Generate Combo**
 
