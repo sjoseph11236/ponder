@@ -7,7 +7,7 @@
 
   [Visit Here](https://ponder-ap.herokuapp.com/#/)
 
-# Image Walk-through
+# Image Walk-through:
 
 **Generate Combo**
 
@@ -51,7 +51,7 @@ Visit the site and try it out for yourself to see of these features in action: [
 - Built a search feature to find songs by word or phrase using the Youtube API.
 - Implemented a custom combination algorithm to create combinations for users to annotate.
 
-## Resources
+## Resources:
 React, Redux, Express, Sequelize, Postgres, Heroku, Youtube API. 
 
 # Local Setup: 
