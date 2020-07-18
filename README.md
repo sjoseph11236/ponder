@@ -36,12 +36,14 @@ Next, a user can annotate on selected combo.
   <p align="center">
     <img src="https://media.giphy.com/media/d88dFwmdnCppVNMpfm/giphy.gif">
   </p>
+
 **Feed**
 
 After, user can click on the `Feed` to view annotations for a combo. 
   <p align="center">
     <img src="https://media.giphy.com/media/YnTftqFBQFFDBxVeId/giphy.gif">
   </p>
+
 Visit the site and try it out for yourself to see of these features in action: [Visit Here](https://ponder-ap.herokuapp.com/#/)
 
 ## Take Aways: 
